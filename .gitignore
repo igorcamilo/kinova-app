@@ -1,3 +1,4 @@
 .DS_Store
-Kinova.xcodeproj/project.xcworkspace/xcuserdata/
-Kinova.xcodeproj/xcuserdata/
+/build/
+/Kinova.xcodeproj/project.xcworkspace/xcuserdata/
+/Kinova.xcodeproj/xcuserdata/
