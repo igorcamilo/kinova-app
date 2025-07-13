@@ -9,7 +9,7 @@ on:
 jobs:
   analyze:
     name: Analyze code (${{ matrix.platform }})
-    runs-on: macos-15
+    runs-on: macos-15-arm64
     permissions:
       security-events: write
     strategy:
