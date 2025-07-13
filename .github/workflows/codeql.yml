@@ -8,12 +8,20 @@ on:
 
 jobs:
   analyze:
-    name: Analyze code
+    name: Analyze code (${{ matrix.platform }})
     runs-on: macos-15
     permissions:
       security-events: write
     strategy:
       fail-fast: false
+      matrix:
+        include:
+        - destination: platform=iOS Simulator,arch=arm64,OS=18.5,name=iPhone 16
+          platform: iOS
+        - destination: platform=macOS,arch=arm64
+          platform: macOS
+        - destination: platform=visionOS Simulator,OS=2.5,name=Apple Vision Pro
+          platform: visionOS
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
@@ -26,7 +34,7 @@ jobs:
         build-mode: manual
     - name: Build project
       shell: bash
-      run: xcrun xcodebuild -scheme Kinova -project Kinova.xcodeproj -destination 'platform=iOS Simulator,name=iPhone 16,OS=18.5'
+      run: xcrun xcodebuild -scheme Kinova -project Kinova.xcodeproj -destination "${{ matrix.destination }}"
     - name: Perform CodeQL analysis
       uses: github/codeql-action/analyze@v3
       with:
