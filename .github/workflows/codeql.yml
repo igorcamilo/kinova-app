@@ -23,8 +23,6 @@ jobs:
           platform: iOS
         - destination: platform=macOS
           platform: macOS
-        - destination: platform=visionOS Simulator
-          platform: visionOS
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
