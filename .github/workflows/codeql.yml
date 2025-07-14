@@ -8,8 +8,11 @@ on:
 
 jobs:
   analyze:
+    concurrency:
+      group: codeql-${{ github.ref }}
+      cancel-in-progress: true
     name: Analyze code (${{ matrix.platform }})
-    runs-on: macos-15-arm64
+    runs-on: macos-15
     permissions:
       security-events: write
     strategy:
@@ -18,10 +21,8 @@ jobs:
         include:
         - destination: platform=iOS Simulator,arch=arm64,OS=18.5,name=iPhone 16
           platform: iOS
-        - destination: platform=macOS,arch=arm64
+        - destination: platform=macOS
           platform: macOS
-        - destination: platform=visionOS Simulator,OS=2.5,name=Apple Vision Pro
-          platform: visionOS
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
@@ -32,6 +33,9 @@ jobs:
       with:
         languages: swift
         build-mode: manual
+    - name: List destinations
+      shell: bash
+      run: xcrun xcodebuild -scheme Kinova -project Kinova.xcodeproj -showdestinations
     - name: Build project
       shell: bash
       run: xcrun xcodebuild -scheme Kinova -project Kinova.xcodeproj -destination "${{ matrix.destination }}"
