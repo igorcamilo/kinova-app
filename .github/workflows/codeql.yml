@@ -37,7 +37,7 @@ jobs:
         build-mode: manual
     - name: Build project
       shell: bash
-      run: xcrun xcodebuild -scheme Kinova -project Kinova.xcodeproj -destination "${{ matrix.destination }}" clean build CODE_SIGN_IDENTITY=""
+      run: xcrun xcodebuild -scheme Kinova -project Kinova.xcodeproj -destination "${{ matrix.destination }}" CODE_SIGNING_ALLOWED="NO"
     - name: Perform CodeQL analysis
       uses: github/codeql-action/analyze@v3
       with:
