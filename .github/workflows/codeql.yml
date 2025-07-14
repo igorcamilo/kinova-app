@@ -19,10 +19,12 @@ jobs:
       fail-fast: false
       matrix:
         include:
-        - destination: platform=iOS Simulator,arch=arm64,OS=18.5,name=iPhone 16
+        - destination: platform=iOS Simulator
           platform: iOS
         - destination: platform=macOS
           platform: macOS
+        - destination: platform=visionOS Simulator
+          platform: visionOS
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
@@ -33,12 +35,9 @@ jobs:
       with:
         languages: swift
         build-mode: manual
-    - name: List destinations
-      shell: bash
-      run: xcrun xcodebuild -scheme Kinova -project Kinova.xcodeproj
     - name: Build project
       shell: bash
-      run: xcrun xcodebuild -scheme Kinova -project Kinova.xcodeproj -destination "${{ matrix.destination }}" clean build
+      run: xcrun xcodebuild -scheme Kinova -project Kinova.xcodeproj -destination "${{ matrix.destination }}" clean build CODE_SIGN_IDENTITY=""
     - name: Perform CodeQL analysis
       uses: github/codeql-action/analyze@v3
       with:
