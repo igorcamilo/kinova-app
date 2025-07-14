@@ -8,25 +8,37 @@ on:
 
 jobs:
   analyze:
-    name: Analyze code
+    concurrency:
+      group: codeql/${{ matrix.platform }}/${{ github.ref }}
+      cancel-in-progress: true
+    name: Analyze code (${{ matrix.platform }})
     runs-on: macos-15
     permissions:
       security-events: write
     strategy:
       fail-fast: false
+      matrix:
+        include:
+        - destination: platform=iOS Simulator,OS=18.5,name=iPhone 16
+          platform: iOS
+        - destination: platform=macOS
+          platform: macOS
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
-    - name: Select Xcode version
-      run: sudo xcode-select -s /Applications/Xcode_16.4.app
     - name: Initialize CodeQL
       uses: github/codeql-action/init@v3
       with:
         languages: swift
         build-mode: manual
+    - name: Select Xcode version
+      run: sudo xcode-select -s /Applications/Xcode_16.4.app
+    - name: List simulators
+      shell: bash
+      run: xcrun simctl list
     - name: Build project
       shell: bash
-      run: xcrun xcodebuild -scheme Kinova -project Kinova.xcodeproj -destination 'platform=iOS Simulator,name=iPhone 16,OS=18.5'
+      run: xcrun xcodebuild -scheme Kinova -project Kinova.xcodeproj -destination "${{ matrix.destination }}" CODE_SIGNING_ALLOWED="NO"
     - name: Perform CodeQL analysis
       uses: github/codeql-action/analyze@v3
       with:
