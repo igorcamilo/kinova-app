@@ -19,22 +19,22 @@ jobs:
       fail-fast: false
       matrix:
         include:
-        - destination: platform=iOS Simulator
+        - destination: platform=iOS Simulator,OS=18.5,name=iPhone 16
           platform: iOS
         - destination: platform=macOS
           platform: macOS
-        - destination: platform=visionOS Simulator,OS=18.5,name=iPhone 16
+        - destination: platform=visionOS Simulator
           platform: visionOS
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
-    - name: Select Xcode version
-      run: sudo xcode-select -s /Applications/Xcode_16.4.app
     - name: Initialize CodeQL
       uses: github/codeql-action/init@v3
       with:
         languages: swift
         build-mode: manual
+    - name: Select Xcode version
+      run: sudo xcode-select -s /Applications/Xcode_16.4.app
     - name: List simulators
       shell: bash
       run: xcrun simctl list
