@@ -23,7 +23,7 @@ jobs:
           platform: iOS
         - destination: platform=macOS
           platform: macOS
-        - destination: platform=visionOS Simulator
+        - destination: platform=visionOS Simulator,OS=18.5,name=iPhone 16
           platform: visionOS
     steps:
     - name: Checkout repository
@@ -35,6 +35,9 @@ jobs:
       with:
         languages: swift
         build-mode: manual
+    - name: List simulators
+      shell: bash
+      run: xcrun simctl list
     - name: Build project
       shell: bash
       run: xcrun xcodebuild -scheme Kinova -project Kinova.xcodeproj -destination "${{ matrix.destination }}" CODE_SIGNING_ALLOWED="NO"
