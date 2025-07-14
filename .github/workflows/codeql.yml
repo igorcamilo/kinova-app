@@ -9,7 +9,7 @@ on:
 jobs:
   analyze:
     concurrency:
-      group: codeql-${{ github.ref }}
+      group: codeql/${{ matrix.platform }}/${{ github.ref }}
       cancel-in-progress: true
     name: Analyze code (${{ matrix.platform }})
     runs-on: macos-15
@@ -35,10 +35,10 @@ jobs:
         build-mode: manual
     - name: List destinations
       shell: bash
-      run: xcrun xcodebuild -scheme Kinova -project Kinova.xcodeproj -showdestinations
+      run: xcrun xcodebuild -scheme Kinova -project Kinova.xcodeproj
     - name: Build project
       shell: bash
-      run: xcrun xcodebuild -scheme Kinova -project Kinova.xcodeproj -destination "${{ matrix.destination }}"
+      run: xcrun xcodebuild -scheme Kinova -project Kinova.xcodeproj -destination "${{ matrix.destination }}" clean build
     - name: Perform CodeQL analysis
       uses: github/codeql-action/analyze@v3
       with:
