@@ -6,11 +6,27 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXContainerItemProxy section */
+		D1032BE72E2D2F5400D3CC5D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D14D23272E22B02B000EBA25 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D14D232E2E22B02B000EBA25;
+			remoteInfo = Kinova;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		D1032BE32E2D2F5400D3CC5D /* KinovaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KinovaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D14D232F2E22B02B000EBA25 /* Kinova.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Kinova.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		D1032BE42E2D2F5400D3CC5D /* KinovaTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = KinovaTests;
+			sourceTree = "<group>";
+		};
 		D14D23312E22B02B000EBA25 /* Kinova */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = Kinova;
@@ -19,6 +35,13 @@
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		D1032BE02E2D2F5400D3CC5D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D14D232C2E22B02B000EBA25 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -33,6 +56,7 @@
 			isa = PBXGroup;
 			children = (
 				D14D23312E22B02B000EBA25 /* Kinova */,
+				D1032BE42E2D2F5400D3CC5D /* KinovaTests */,
 				D14D23302E22B02B000EBA25 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -41,6 +65,7 @@
 			isa = PBXGroup;
 			children = (
 				D14D232F2E22B02B000EBA25 /* Kinova.app */,
+				D1032BE32E2D2F5400D3CC5D /* KinovaTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -48,6 +73,29 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		D1032BE22E2D2F5400D3CC5D /* KinovaTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D1032BE92E2D2F5400D3CC5D /* Build configuration list for PBXNativeTarget "KinovaTests" */;
+			buildPhases = (
+				D1032BDF2E2D2F5400D3CC5D /* Sources */,
+				D1032BE02E2D2F5400D3CC5D /* Frameworks */,
+				D1032BE12E2D2F5400D3CC5D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D1032BE82E2D2F5400D3CC5D /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				D1032BE42E2D2F5400D3CC5D /* KinovaTests */,
+			);
+			name = KinovaTests;
+			packageProductDependencies = (
+			);
+			productName = KinovaTests;
+			productReference = D1032BE32E2D2F5400D3CC5D /* KinovaTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		D14D232E2E22B02B000EBA25 /* Kinova */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = D14D233B2E22B02C000EBA25 /* Build configuration list for PBXNativeTarget "Kinova" */;
@@ -80,6 +128,10 @@
 				LastSwiftUpdateCheck = 1640;
 				LastUpgradeCheck = 1640;
 				TargetAttributes = {
+					D1032BE22E2D2F5400D3CC5D = {
+						CreatedOnToolsVersion = 16.4;
+						TestTargetID = D14D232E2E22B02B000EBA25;
+					};
 					D14D232E2E22B02B000EBA25 = {
 						CreatedOnToolsVersion = 16.4;
 					};
@@ -100,11 +152,19 @@
 			projectRoot = "";
 			targets = (
 				D14D232E2E22B02B000EBA25 /* Kinova */,
+				D1032BE22E2D2F5400D3CC5D /* KinovaTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		D1032BE12E2D2F5400D3CC5D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D14D232D2E22B02B000EBA25 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -115,6 +175,13 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		D1032BDF2E2D2F5400D3CC5D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D14D232B2E22B02B000EBA25 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -124,7 +191,59 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		D1032BE82E2D2F5400D3CC5D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D14D232E2E22B02B000EBA25 /* Kinova */;
+			targetProxy = D1032BE72E2D2F5400D3CC5D /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		D1032BEA2E2D2F5400D3CC5D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
+				MACOSX_DEPLOYMENT_TARGET = 15.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.igorcamilo.kinova.tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,7";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Kinova.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Kinova";
+				XROS_DEPLOYMENT_TARGET = 2.5;
+			};
+			name = Debug;
+		};
+		D1032BEB2E2D2F5400D3CC5D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
+				MACOSX_DEPLOYMENT_TARGET = 15.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.igorcamilo.kinova.tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,7";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Kinova.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Kinova";
+				XROS_DEPLOYMENT_TARGET = 2.5;
+			};
+			name = Release;
+		};
 		D14D23392E22B02C000EBA25 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -249,7 +368,6 @@
 				CODE_SIGN_ENTITLEMENTS = Kinova/Kinova.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 2CPJD7ENY9;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -288,7 +406,6 @@
 				CODE_SIGN_ENTITLEMENTS = Kinova/Kinova.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 2CPJD7ENY9;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -322,6 +439,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		D1032BE92E2D2F5400D3CC5D /* Build configuration list for PBXNativeTarget "KinovaTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D1032BEA2E2D2F5400D3CC5D /* Debug */,
+				D1032BEB2E2D2F5400D3CC5D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		D14D232A2E22B02B000EBA25 /* Build configuration list for PBXProject "Kinova" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
