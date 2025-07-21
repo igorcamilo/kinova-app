@@ -14,7 +14,7 @@ final class KinovaViewModel {
 
     var selectedTab = Tab.movies
 
-    init(client: Client = .default) {
+    init(client: Client = .shared) {
         self.client = client
     }
 
