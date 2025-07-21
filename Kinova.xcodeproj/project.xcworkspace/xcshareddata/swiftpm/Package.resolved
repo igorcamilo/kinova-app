@@ -1,0 +1,15 @@
+{
+  "originHash" : "50a7be36106d362cea9ca5c2c830a2f387cb07735539d5ea5e0e8c8ca642f0b9",
+  "pins" : [
+    {
+      "identity" : "tmdb-swift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/igorcamilo/tmdb-swift.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "37fa76b6cb6a0168330f05fc267091d4bbdd0b98"
+      }
+    }
+  ],
+  "version" : 3
+}

@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		D1032BF12E2D45A900D3CC5D /* TMDB in Frameworks */ = {isa = PBXBuildFile; productRef = D1032BF02E2D45A800D3CC5D /* TMDB */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		D1032BE72E2D2F5400D3CC5D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -46,6 +50,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D1032BF12E2D45A900D3CC5D /* TMDB in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -113,6 +118,7 @@
 			);
 			name = Kinova;
 			packageProductDependencies = (
+				D1032BF02E2D45A800D3CC5D /* TMDB */,
 			);
 			productName = Kinova;
 			productReference = D14D232F2E22B02B000EBA25 /* Kinova.app */;
@@ -146,6 +152,9 @@
 			);
 			mainGroup = D14D23262E22B02B000EBA25;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				D1032BEF2E2D45A800D3CC5D /* XCRemoteSwiftPackageReference "tmdb-swift" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = D14D23302E22B02B000EBA25 /* Products */;
 			projectDirPath = "";
@@ -215,7 +224,6 @@
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
 				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2,7";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Kinova.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Kinova";
 				XROS_DEPLOYMENT_TARGET = 2.5;
@@ -237,7 +245,6 @@
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
 				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2,7";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Kinova.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Kinova";
 				XROS_DEPLOYMENT_TARGET = 2.5;
@@ -303,6 +310,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 6.0;
 			};
 			name = Debug;
 		};
@@ -357,6 +365,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_VERSION = 6.0;
 			};
 			name = Release;
 		};
@@ -386,13 +395,12 @@
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 15.5;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.igorcamilo.Kinova;
+				PRODUCT_BUNDLE_IDENTIFIER = com.igorcamilo.kinova;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2,7";
 				XROS_DEPLOYMENT_TARGET = 2.5;
 			};
@@ -424,13 +432,12 @@
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 15.5;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.igorcamilo.Kinova;
+				PRODUCT_BUNDLE_IDENTIFIER = com.igorcamilo.kinova;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2,7";
 				XROS_DEPLOYMENT_TARGET = 2.5;
 			};
@@ -467,6 +474,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		D1032BEF2E2D45A800D3CC5D /* XCRemoteSwiftPackageReference "tmdb-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/igorcamilo/tmdb-swift.git";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		D1032BF02E2D45A800D3CC5D /* TMDB */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D1032BEF2E2D45A800D3CC5D /* XCRemoteSwiftPackageReference "tmdb-swift" */;
+			productName = TMDB;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = D14D23272E22B02B000EBA25 /* Project object */;
 }
