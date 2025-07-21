@@ -11,7 +11,7 @@ import SwiftUI
 struct KinovaApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            KinovaView()
         }
     }
 }
