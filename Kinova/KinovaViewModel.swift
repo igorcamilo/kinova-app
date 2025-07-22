@@ -8,14 +8,18 @@
 import Observation
 import TMDB
 
+@MainActor
 @Observable
 final class KinovaViewModel {
     let client: Client
+
+    let moviesViewModel: MoviesViewModel
 
     var selectedTab = Tab.movies
 
     init(client: Client = .shared) {
         self.client = client
+        self.moviesViewModel = MoviesViewModel(client: client)
     }
 
     enum Tab: Codable, Hashable, Sendable {

@@ -13,7 +13,7 @@ struct KinovaView: View {
     var body: some View {
         TabView(selection: $viewModel.selectedTab) {
             Tab("Movies", systemImage: "film", value: .movies) {
-                Text("Movies Tab")
+                MoviesView(viewModel: viewModel.moviesViewModel)
             }
             Tab("TV Shows", systemImage: "tv", value: .tvShows) {
                 Text("TV Shows Tab")
