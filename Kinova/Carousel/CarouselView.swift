@@ -50,10 +50,9 @@ struct CarouselView: View {
             } placeholder: {
                 Color.secondary
             }
-            .imageFrame()
+            .imageConfig()
             Text(item.title)
-                .font(.body)
-                .textFrame()
+                .textConfig()
         }
     }
 
@@ -73,27 +72,29 @@ struct CarouselView: View {
     private func placeholderItemView() -> some View {
         VStack {
             Color.secondary
-                .imageFrame()
-            Text("Lorem ipsum dolor sit amet consectetur adipisicing elit")
-                .font(.body)
-                .textFrame()
+                .imageConfig()
+            Text(verbatim: "Lorem ipsum")
+                .textConfig()
         }
     }
 }
 
 private extension View {
-    func imageFrame() -> some View {
+    func imageConfig() -> some View {
         self.frame(width: 180, height: 270)
     }
 
-    func textFrame() -> some View {
-        self.lineLimit(2, reservesSpace: true).frame(width: 180)
+    func textConfig() -> some View {
+        self.multilineTextAlignment(.center)
+            .font(.body)
+            .lineLimit(1)
+            .frame(width: 180)
     }
 }
 
 #Preview {
     CarouselView(
-        title: "Title",
+        title: "Lorem Ipsum",
         viewModel: CarouselViewModel(
             list: .movies(.nowPlaying)
         ),

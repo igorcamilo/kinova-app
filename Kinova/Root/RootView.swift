@@ -16,7 +16,7 @@ struct RootView: View {
                 MoviesView(viewModel: viewModel.moviesViewModel)
             }
             Tab("TV Shows", systemImage: "tv", value: .tvShows) {
-                Text("TV Shows Tab")
+                TVShowsView(viewModel: viewModel.tvShowsViewModel)
             }
         }
         .tabViewStyle(.sidebarAdaptable)
