@@ -1,0 +1,58 @@
+//
+//  MoviesView.swift
+//  Kinova
+//
+//  Created by Igor Camilo on 22.07.25.
+//
+
+import SwiftUI
+
+struct MoviesView: View {
+    let viewModel: MoviesViewModel
+
+    var body: some View {
+        NavigationStack {
+            ScrollView(.vertical) {
+                LazyVStack(spacing: 20) {
+                    CarouselView(
+                        title: "Now Playing",
+                        viewModel: viewModel.nowPlaying
+                    )
+                    CarouselView(
+                        title: "Popular",
+                        viewModel: viewModel.popular
+                    )
+                    CarouselView(
+                        title: "Top Rated",
+                        viewModel: viewModel.topRated
+                    )
+                    CarouselView(
+                        title: "Upcoming",
+                        viewModel: viewModel.upcoming
+                    )
+                }
+                .padding(.vertical)
+            }
+            .refreshable {
+                await withTaskGroup { group in
+                    group.addTask {
+                        await viewModel.load()
+                    }
+                    group.addTask {
+                        // If the real loading is too fast, we
+                        // add a little extra time
+                        try? await Task.sleep(for: .seconds(2))
+                    }
+                }
+            }
+            .navigationTitle("Movies")
+        }
+        .task {
+            await viewModel.load()
+        }
+    }
+}
+
+#Preview {
+    MoviesView(viewModel: MoviesViewModel())
+}
