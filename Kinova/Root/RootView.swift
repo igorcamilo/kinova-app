@@ -1,5 +1,5 @@
 //
-//  KinovaView.swift
+//  RootView.swift
 //  Kinova
 //
 //  Created by Igor Camilo on 20.07.25.
@@ -7,8 +7,8 @@
 
 import SwiftUI
 
-struct KinovaView: View {
-    @State private var viewModel = KinovaViewModel()
+struct RootView: View {
+    @Bindable var viewModel: RootViewModel
 
     var body: some View {
         TabView(selection: $viewModel.selectedTab) {
@@ -24,5 +24,5 @@ struct KinovaView: View {
 }
 
 #Preview {
-    KinovaView()
+    RootView(viewModel: RootViewModel())
 }

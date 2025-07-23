@@ -16,19 +16,23 @@ struct MoviesView: View {
                 LazyVStack(spacing: 20) {
                     CarouselView(
                         title: "Now Playing",
-                        viewModel: viewModel.nowPlaying
+                        viewModel: viewModel.nowPlaying,
+                        action: viewModel.onListItemTap(id:)
                     )
                     CarouselView(
                         title: "Popular",
-                        viewModel: viewModel.popular
+                        viewModel: viewModel.popular,
+                        action: viewModel.onListItemTap(id:)
                     )
                     CarouselView(
                         title: "Top Rated",
-                        viewModel: viewModel.topRated
+                        viewModel: viewModel.topRated,
+                        action: viewModel.onListItemTap(id:)
                     )
                     CarouselView(
                         title: "Upcoming",
-                        viewModel: viewModel.upcoming
+                        viewModel: viewModel.upcoming,
+                        action: viewModel.onListItemTap(id:)
                     )
                 }
                 .padding(.vertical)
@@ -46,9 +50,6 @@ struct MoviesView: View {
                 }
             }
             .navigationTitle("Movies")
-        }
-        .task {
-            await viewModel.load()
         }
     }
 }

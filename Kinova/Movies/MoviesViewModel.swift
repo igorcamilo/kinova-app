@@ -43,4 +43,6 @@ final class MoviesViewModel {
             }
         }
     }
+
+    func onListItemTap(id: CarouselViewModel.Item.ID) {}
 }
