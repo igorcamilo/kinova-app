@@ -29,16 +29,16 @@ final class TVShowsViewModel {
 
     func load() async {
         await withTaskGroup { [airingToday, onTheAir, popular, topRated] group in
-            group.addTask(name: "TV Shows: Airing Today") {
+            group.addTask {
                 await airingToday.load()
             }
-            group.addTask(name: "TV Shows: On The Air") {
+            group.addTask {
                 await onTheAir.load()
             }
-            group.addTask(name: "TV Shows: Popular") {
+            group.addTask {
                 await popular.load()
             }
-            group.addTask(name: "TV Shows: Top Rated") {
+            group.addTask {
                 await topRated.load()
             }
         }

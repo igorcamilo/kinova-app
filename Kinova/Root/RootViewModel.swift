@@ -18,7 +18,7 @@ final class RootViewModel {
 
     var selectedTab = Tab.movies {
         didSet {
-            Task(name: "Tab Selected") {
+            Task {
                 await loadSelectedTab()
             }
         }

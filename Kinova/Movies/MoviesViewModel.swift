@@ -31,16 +31,16 @@ final class MoviesViewModel {
 
     func load() async {
         await withTaskGroup { [nowPlaying, popular, topRated, upcoming] group in
-            group.addTask(name: "Movies: Now Playing") {
+            group.addTask {
                 await nowPlaying.load()
             }
-            group.addTask(name: "Movies: Popular") {
+            group.addTask {
                 await popular.load()
             }
-            group.addTask(name: "Movies: Top Rated") {
+            group.addTask {
                 await topRated.load()
             }
-            group.addTask(name: "Movies: Upcoming") {
+            group.addTask {
                 await upcoming.load()
             }
         }
