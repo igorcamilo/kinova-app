@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct MoviesView: View {
-    let viewModel: MoviesViewModel
+    @Bindable var viewModel: MoviesViewModel
 
     var body: some View {
         NavigationStack {
@@ -50,6 +50,9 @@ struct MoviesView: View {
                 }
             }
             .navigationTitle("Movies")
+            .navigationDestination(item: $viewModel.movieDetail) {
+                MovieDetailView(viewModel: $0)
+            }
         }
     }
 }

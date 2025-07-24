@@ -19,6 +19,8 @@ final class MoviesViewModel {
     let topRated: CarouselViewModel
     let upcoming: CarouselViewModel
 
+    var movieDetail: MovieDetailViewModel?
+
     init(client: Client = .shared) {
         self.client = client
         self.nowPlaying = CarouselViewModel(client: client, list: .movies(.nowPlaying))
@@ -44,5 +46,12 @@ final class MoviesViewModel {
         }
     }
 
-    func onListItemTap(id: CarouselViewModel.Item.ID) {}
+    func onListItemTap(id: CarouselViewModel.Item.ID) {
+        switch id {
+        case let .movie(id):
+            movieDetail = MovieDetailViewModel(client: client, id: id)
+        case .tvShow:
+            break
+        }
+    }
 }
