@@ -22,16 +22,7 @@ struct TVShowDetailView: View {
             .padding(.vertical)
         }
         .refreshable {
-            await withTaskGroup { group in
-                group.addTask {
-                    await viewModel.load()
-                }
-                group.addTask {
-                    // If the real loading is too fast, we
-                    // add a little extra time
-                    try? await Task.sleep(for: .seconds(2))
-                }
-            }
+            await viewModel.load()
         }
         .navigationTitle("TV Show Detail \(viewModel.id.rawValue)")
         .navigationDestination(item: $viewModel.tvShowDetail) {
