@@ -19,6 +19,8 @@ final class TVShowsViewModel {
     let popular: CarouselViewModel
     let topRated: CarouselViewModel
 
+    var tvShowDetail: TVShowDetailViewModel?
+
     init(client: Client = .shared) {
         self.client = client
         self.airingToday = CarouselViewModel(client: client, list: .tvShows(.airingToday))
@@ -44,5 +46,14 @@ final class TVShowsViewModel {
         }
     }
 
-    func onListItemTap(id: CarouselViewModel.Item.ID) {}
+    func onListItemTap(id: CarouselViewModel.Item.ID) {
+        switch id {
+        case let .tvShow(id):
+            let viewModel = TVShowDetailViewModel(client: client, id: id)
+            tvShowDetail = viewModel
+            Task { await viewModel.load() }
+        case .movie:
+            break
+        }
+    }
 }

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct TVShowsView: View {
-    let viewModel: TVShowsViewModel
+    @Bindable var viewModel: TVShowsViewModel
 
     var body: some View {
         NavigationStack {
@@ -50,6 +50,9 @@ struct TVShowsView: View {
                 }
             }
             .navigationTitle("TV Shows")
+            .navigationDestination(item: $viewModel.tvShowDetail) {
+                TVShowDetailView(viewModel: $0)
+            }
         }
     }
 }
