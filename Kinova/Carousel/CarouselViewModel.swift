@@ -50,7 +50,7 @@ final class CarouselViewModel {
         async let movies = client.movies(list: movieList)
         let baseURL = try await basePosterURL()
         return try await movies.results.map {
-            let url = baseURL.appending(path: $0.posterPath)
+            let url = $0.posterPath.map { baseURL.appending(path: $0) }
             return Item(id: .movie($0.id), imageURL: url, title: $0.title)
         }
     }
@@ -59,7 +59,7 @@ final class CarouselViewModel {
         async let movies = client.tvShows(list: tvShowList)
         let baseURL = try await basePosterURL()
         return try await movies.results.map {
-            let url = baseURL.appending(path: $0.posterPath)
+            let url = $0.posterPath.map { baseURL.appending(path: $0) }
             return Item(id: .tvShow($0.id), imageURL: url, title: $0.name)
         }
     }
@@ -72,7 +72,7 @@ final class CarouselViewModel {
 
     struct Item: Codable, Hashable, Identifiable, Sendable {
         var id: ID
-        var imageURL: URL
+        var imageURL: URL?
         var title: String
 
         enum ID: Codable, Hashable, Sendable {
