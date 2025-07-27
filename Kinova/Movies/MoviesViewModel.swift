@@ -49,7 +49,9 @@ final class MoviesViewModel {
     func onListItemTap(id: CarouselViewModel.Item.ID) {
         switch id {
         case let .movie(id):
-            movieDetail = MovieDetailViewModel(client: client, id: id)
+            let viewModel = MovieDetailViewModel(client: client, id: id)
+            movieDetail = viewModel
+            Task { await viewModel.load() }
         case .tvShow:
             break
         }
