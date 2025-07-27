@@ -12,6 +12,8 @@ struct CarouselView: View {
     let viewModel: CarouselViewModel
     let action: (CarouselViewModel.Item.ID) -> Void
 
+    static let posterSize = CGSize(width: 180, height: 270)
+
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             Text(title)
@@ -81,14 +83,19 @@ struct CarouselView: View {
 
 private extension View {
     func imageConfig() -> some View {
-        self.frame(width: 180, height: 270)
+        self.frame(
+            width: CarouselView.posterSize.width,
+            height: CarouselView.posterSize.height
+        )
     }
 
     func textConfig() -> some View {
         self.multilineTextAlignment(.center)
             .font(.body)
             .lineLimit(1)
-            .frame(width: 180)
+            .frame(
+                width: CarouselView.posterSize.width
+            )
     }
 }
 

@@ -48,26 +48,22 @@ final class CarouselViewModel {
 
     private func items(movieList: MovieList) async throws -> [Item] {
         async let movies = client.movies(list: movieList)
-        let baseURL = try await basePosterURL()
-        return try await movies.results.map {
-            let url = $0.posterPath.map { baseURL.appending(path: $0) }
-            return Item(id: .movie($0.id), imageURL: url, title: $0.title)
+        let images = try await client.configuration().images
+        let size = images.size(width: CarouselView.posterSize.width, from: \.posterSizes)
+        return try await movies.results.map { movie in
+            let url = size.flatMap { images.url(size: $0, path: movie.posterPath) }
+            return Item(id: .movie(movie.id), imageURL: url, title: movie.title)
         }
     }
 
     private func items(tvShowList: TVShowList) async throws -> [Item] {
-        async let movies = client.tvShows(list: tvShowList)
-        let baseURL = try await basePosterURL()
-        return try await movies.results.map {
-            let url = $0.posterPath.map { baseURL.appending(path: $0) }
-            return Item(id: .tvShow($0.id), imageURL: url, title: $0.name)
+        async let tvShows = client.tvShows(list: tvShowList)
+        let images = try await client.configuration().images
+        let size = images.size(width: CarouselView.posterSize.width, from: \.posterSizes)
+        return try await tvShows.results.map { tvShow in
+            let url = size.flatMap { images.url(size: $0, path: tvShow.posterPath) }
+            return Item(id: .tvShow(tvShow.id), imageURL: url, title: tvShow.name)
         }
-    }
-
-    private func basePosterURL() async throws -> URL {
-        let configuration = try await client.configuration()
-        let posterSize = "w500" // FIXME: configuration.images.posterSizes
-        return configuration.images.secureBaseURL.appending(path: posterSize)
     }
 
     struct Item: Codable, Hashable, Identifiable, Sendable {
