@@ -1,5 +1,5 @@
 //
-//  Client+Shared.swift
+//  Client+Kinova.swift
 //  Kinova
 //
 //  Created by Igor Camilo on 20.07.25.
