@@ -17,7 +17,7 @@ cat > "$OUTPUT_FILE" <<EOL
 // This file is auto-generated. Do not edit.
 
 enum KinovaSecrets {
-    static let tmdbAccessToken = "$TMDB_ACCESS_TOKEN"
+  static let tmdbAccessToken = "$TMDB_ACCESS_TOKEN"
 }
 EOL
 
