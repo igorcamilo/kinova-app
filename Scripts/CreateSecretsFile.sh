@@ -14,6 +14,7 @@ OUTPUT_FILE="$SCRIPT_DIR/../Kinova/KinovaSecrets.swift"
 
 # Write the Swift file
 cat > "$OUTPUT_FILE" <<EOL
+// swift-format-ignore-file
 // This file is auto-generated. Do not edit.
 
 enum KinovaSecrets {
