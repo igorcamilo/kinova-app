@@ -12,48 +12,48 @@ import TMDB
 @MainActor
 @Observable
 final class MoviesViewModel {
-    let client: Client
+  let client: Client
 
-    let nowPlaying: CarouselViewModel
-    let popular: CarouselViewModel
-    let topRated: CarouselViewModel
-    let upcoming: CarouselViewModel
+  let nowPlaying: CarouselViewModel
+  let popular: CarouselViewModel
+  let topRated: CarouselViewModel
+  let upcoming: CarouselViewModel
 
-    var movieDetail: MovieDetailViewModel?
+  var movieDetail: MovieDetailViewModel?
 
-    init(client: Client = .shared) {
-        self.client = client
-        self.nowPlaying = CarouselViewModel(client: client, list: .movies(.nowPlaying))
-        self.popular = CarouselViewModel(client: client, list: .movies(.popular))
-        self.topRated = CarouselViewModel(client: client, list: .movies(.topRated))
-        self.upcoming = CarouselViewModel(client: client, list: .movies(.upcoming))
+  init(client: Client = .shared) {
+    self.client = client
+    self.nowPlaying = CarouselViewModel(client: client, list: .movies(.nowPlaying))
+    self.popular = CarouselViewModel(client: client, list: .movies(.popular))
+    self.topRated = CarouselViewModel(client: client, list: .movies(.topRated))
+    self.upcoming = CarouselViewModel(client: client, list: .movies(.upcoming))
+  }
+
+  func load() async {
+    await withTaskGroup { [nowPlaying, popular, topRated, upcoming] group in
+      group.addTask {
+        await nowPlaying.load()
+      }
+      group.addTask {
+        await popular.load()
+      }
+      group.addTask {
+        await topRated.load()
+      }
+      group.addTask {
+        await upcoming.load()
+      }
     }
+  }
 
-    func load() async {
-        await withTaskGroup { [nowPlaying, popular, topRated, upcoming] group in
-            group.addTask {
-                await nowPlaying.load()
-            }
-            group.addTask {
-                await popular.load()
-            }
-            group.addTask {
-                await topRated.load()
-            }
-            group.addTask {
-                await upcoming.load()
-            }
-        }
+  func onListItemTap(id: CarouselViewModel.Item.ID) {
+    switch id {
+    case .movie(let id):
+      let viewModel = MovieDetailViewModel(client: client, id: id)
+      movieDetail = viewModel
+      Task { await viewModel.load() }
+    case .tvShow:
+      break
     }
-
-    func onListItemTap(id: CarouselViewModel.Item.ID) {
-        switch id {
-        case let .movie(id):
-            let viewModel = MovieDetailViewModel(client: client, id: id)
-            movieDetail = viewModel
-            Task { await viewModel.load() }
-        case .tvShow:
-            break
-        }
-    }
+  }
 }

@@ -9,22 +9,22 @@ import SwiftUI
 
 @main
 struct KinovaApp: App {
-    var body: some Scene {
-        WindowGroup {
-            KinovaAppView()
-        }
+  var body: some Scene {
+    WindowGroup {
+      KinovaAppView()
     }
+  }
 }
 
 private struct KinovaAppView: View {
-    @State private var viewModel = RootViewModel()
+  @State private var viewModel = RootViewModel()
 
-    var body: some View {
-        RootView(
-            viewModel: viewModel
-        )
-        .task {
-            await viewModel.load()
-        }
+  var body: some View {
+    RootView(
+      viewModel: viewModel
+    )
+    .task {
+      await viewModel.load()
     }
+  }
 }

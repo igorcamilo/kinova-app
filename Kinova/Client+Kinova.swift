@@ -8,7 +8,7 @@
 import TMDB
 
 extension Client {
-    static let shared = Client(
-        accessToken: KinovaSecrets.tmdbAccessToken
-    )
+  static let shared = Client(
+    accessToken: KinovaSecrets.tmdbAccessToken
+  )
 }

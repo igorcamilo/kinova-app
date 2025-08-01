@@ -8,21 +8,21 @@
 import SwiftUI
 
 struct RootView: View {
-    @Bindable var viewModel: RootViewModel
+  @Bindable var viewModel: RootViewModel
 
-    var body: some View {
-        TabView(selection: $viewModel.selectedTab) {
-            Tab("Movies", systemImage: "film", value: .movies) {
-                MoviesView(viewModel: viewModel.moviesViewModel)
-            }
-            Tab("TV Shows", systemImage: "tv", value: .tvShows) {
-                TVShowsView(viewModel: viewModel.tvShowsViewModel)
-            }
-        }
-        .tabViewStyle(.sidebarAdaptable)
+  var body: some View {
+    TabView(selection: $viewModel.selectedTab) {
+      Tab("Movies", systemImage: "film", value: .movies) {
+        MoviesView(viewModel: viewModel.moviesViewModel)
+      }
+      Tab("TV Shows", systemImage: "tv", value: .tvShows) {
+        TVShowsView(viewModel: viewModel.tvShowsViewModel)
+      }
     }
+    .tabViewStyle(.sidebarAdaptable)
+  }
 }
 
 #Preview {
-    RootView(viewModel: RootViewModel())
+  RootView(viewModel: RootViewModel())
 }
