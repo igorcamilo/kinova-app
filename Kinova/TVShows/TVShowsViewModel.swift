@@ -34,25 +34,25 @@ final class TVShowsViewModel {
   func load(width: CGFloat) async {
     logger.debug("Loading TV shows")
     do {
-      async let airingTodayMovies = client.tvShows(list: .airingToday)
-      async let onTheAirMovies = client.tvShows(list: .onTheAir)
-      async let popularMovies = client.tvShows(list: .popular)
-      async let topRatedMovies = client.tvShows(list: .topRated)
+      async let airingTodayTVShows = client.tvShows(list: .airingToday)
+      async let onTheAirTVShows = client.tvShows(list: .onTheAir)
+      async let popularTVShows = client.tvShows(list: .popular)
+      async let topRatedTVShows = client.tvShows(list: .topRated)
       let images = try await client.configuration().images
       let size = images.size(width: width, from: \.posterSizes)
-      airingToday = try await airingTodayMovies.results.map { tvShow in
+      airingToday = try await airingTodayTVShows.results.map { tvShow in
         let url = size.flatMap { images.url(size: $0, path: tvShow.posterPath) }
         return CarouselItem(id: .tvShow(tvShow.id), imageURL: url, title: tvShow.name)
       }
-      onTheAir = try await onTheAirMovies.results.map { tvShow in
+      onTheAir = try await onTheAirTVShows.results.map { tvShow in
         let url = size.flatMap { images.url(size: $0, path: tvShow.posterPath) }
         return CarouselItem(id: .tvShow(tvShow.id), imageURL: url, title: tvShow.name)
       }
-      popular = try await popularMovies.results.map { tvShow in
+      popular = try await popularTVShows.results.map { tvShow in
         let url = size.flatMap { images.url(size: $0, path: tvShow.posterPath) }
         return CarouselItem(id: .tvShow(tvShow.id), imageURL: url, title: tvShow.name)
       }
-      topRated = try await topRatedMovies.results.map { tvShow in
+      topRated = try await topRatedTVShows.results.map { tvShow in
         let url = size.flatMap { images.url(size: $0, path: tvShow.posterPath) }
         return CarouselItem(id: .tvShow(tvShow.id), imageURL: url, title: tvShow.name)
       }
