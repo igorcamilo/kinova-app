@@ -8,9 +8,9 @@
 import SwiftUI
 
 extension View {
-    func destination() -> some View {
-        self.navigationDestination(for: Destination.self) {
-            DestinationView(destination: $0)
-        }
+  func destination() -> some View {
+    self.navigationDestination(for: Destination.self) {
+      DestinationView(destination: $0)
     }
+  }
 }

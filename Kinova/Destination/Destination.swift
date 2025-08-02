@@ -8,6 +8,6 @@
 import TMDB
 
 enum Destination: Codable, Hashable, Sendable {
-    case movie(Movie.ID)
-    case tvShow(TVShow.ID)
+  case movie(Movie.ID)
+  case tvShow(TVShow.ID)
 }
