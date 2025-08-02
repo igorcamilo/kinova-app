@@ -13,10 +13,14 @@ struct RootView: View {
   var body: some View {
     TabView(selection: $viewModel.selectedTab) {
       Tab("Movies", systemImage: "film", value: .movies) {
-        MoviesView()
+        NavigationStack(path: $viewModel.moviesPath) {
+          MoviesView()
+        }
       }
       Tab("TV Shows", systemImage: "tv", value: .tvShows) {
-        TVShowsView()
+        NavigationStack(path: $viewModel.tvShowsPath) {
+          TVShowsView()
+        }
       }
     }
     .tabViewStyle(.sidebarAdaptable)
