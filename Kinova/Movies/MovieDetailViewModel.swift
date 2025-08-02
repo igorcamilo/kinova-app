@@ -5,24 +5,43 @@
 //  Created by Igor Camilo on 23.07.25.
 //
 
+import Foundation
 import Observation
 import TMDB
+import os
+
+private let logger = Logger(subsystem: "com.igorcamilo.kinova", category: "MovieDetailViewModel")
 
 @MainActor
 @Observable
 final class MovieDetailViewModel {
   let client: Client
-  let id: Movie.ID
 
   var similar: [CarouselItem] = []
 
-  var movieDetail: MovieDetailViewModel?
-
-  init(client: Client = .shared, id: Movie.ID) {
+  init(client: Client = .shared) {
+    logger.debug("Initializing MovieDetailViewModel")
     self.client = client
-    self.id = id
   }
 
-  func load() async {
+  deinit {
+    logger.debug("Deinitializing MovieDetailViewModel")
+  }
+
+  func load(id: Movie.ID, width: CGFloat) async {
+    logger.debug("Loading movie detail id: \(id.rawValue)")
+    do {
+      async let similarMovies = client.movies(list: .similar(id))
+      let images = try await client.configuration().images
+      let size = images.size(width: width, from: \.posterSizes)
+      similar = try await similarMovies.results.map { movie in
+        let url = size.flatMap { images.url(size: $0, path: movie.posterPath) }
+        return CarouselItem(id: .movie(movie.id), imageURL: url, title: movie.title)
+      }
+    } catch URLError.cancelled {
+      logger.info("Movie detail loading cancelled")
+    } catch {
+      logger.warning("Failed to load movie detail: \(error)")
+    }
   }
 }

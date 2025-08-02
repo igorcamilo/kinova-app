@@ -14,11 +14,9 @@ struct DestinationView: View {
   var body: some View {
     switch destination {
     case .movie(let id):
-      let viewModel = MovieDetailViewModel(id: id)
-      MovieDetailView(viewModel: viewModel)
+      MovieDetailView(id: id)
     case .tvShow(let id):
-      let viewModel = TVShowDetailViewModel(id: id)
-      TVShowDetailView(viewModel: viewModel)
+      TVShowDetailView(id: id)
     }
   }
 }
