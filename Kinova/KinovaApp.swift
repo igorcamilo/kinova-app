@@ -11,20 +11,7 @@ import SwiftUI
 struct KinovaApp: App {
   var body: some Scene {
     WindowGroup {
-      KinovaAppView()
-    }
-  }
-}
-
-private struct KinovaAppView: View {
-  @State private var viewModel = RootViewModel()
-
-  var body: some View {
-    RootView(
-      viewModel: viewModel
-    )
-    .task {
-      await viewModel.load()
+      RootView()
     }
   }
 }

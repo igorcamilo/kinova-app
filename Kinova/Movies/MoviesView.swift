@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct MoviesView: View {
-  @Bindable var viewModel: MoviesViewModel
+  @State private var viewModel = MoviesViewModel()
 
   var body: some View {
     NavigationStack {
@@ -40,6 +40,9 @@ struct MoviesView: View {
       .refreshable {
         await viewModel.load()
       }
+      .task {
+        await viewModel.load()
+      }
       .navigationTitle("Movies")
       .navigationDestination(item: $viewModel.movieDetail) {
         MovieDetailView(viewModel: $0)
@@ -49,5 +52,5 @@ struct MoviesView: View {
 }
 
 #Preview {
-  MoviesView(viewModel: MoviesViewModel())
+  MoviesView()
 }
