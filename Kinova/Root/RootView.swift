@@ -14,12 +14,12 @@ struct RootView: View {
     TabView(selection: $viewModel.selectedTab) {
       Tab("Movies", systemImage: "film", value: .movies) {
         NavigationStack(path: $viewModel.moviesPath) {
-          MoviesView()
+          MoviesView().destination()
         }
       }
       Tab("TV Shows", systemImage: "tv", value: .tvShows) {
         NavigationStack(path: $viewModel.tvShowsPath) {
-          TVShowsView()
+          TVShowsView().destination()
         }
       }
     }

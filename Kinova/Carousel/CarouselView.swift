@@ -9,32 +9,28 @@ import SwiftUI
 
 struct CarouselView: View {
   let title: LocalizedStringKey
-  let viewModel: CarouselViewModel
-  let action: (CarouselViewModel.Item.ID) -> Void
+  let items: [CarouselItem]
 
-  static let posterSize = CGSize(width: 180, height: 270)
+  @Environment(\.carouselItemSize) private var itemSize
 
   var body: some View {
     VStack(alignment: .leading, spacing: 8) {
       Text(title)
         .font(.title)
         .padding(.horizontal)
-      switch viewModel.state {
-      case .loaded(let items):
-        loadedView(items: items)
-      case .placeholder:
+      if items.isEmpty {
         placeholderView()
+      } else {
+        loadedView()
       }
     }
   }
 
-  private func loadedView(items: [CarouselViewModel.Item]) -> some View {
+  private func loadedView() -> some View {
     ScrollView(.horizontal) {
       LazyHStack(alignment: .top) {
         ForEach(items) { item in
-          Button {
-            action(item.id)
-          } label: {
+          NavigationLink(value: item.destination) {
             loadedItemView(item)
           }
           .buttonStyle(.plain)
@@ -45,16 +41,16 @@ struct CarouselView: View {
     .scrollIndicators(.never)
   }
 
-  private func loadedItemView(_ item: CarouselViewModel.Item) -> some View {
+  private func loadedItemView(_ item: CarouselItem) -> some View {
     VStack {
       AsyncImage(url: item.imageURL) { image in
         image.resizable()
       } placeholder: {
         Color.secondary
       }
-      .imageConfig()
+      .imageConfig(size: itemSize)
       Text(item.title)
-        .textConfig()
+        .textConfig(size: itemSize)
     }
   }
 
@@ -74,37 +70,29 @@ struct CarouselView: View {
   private func placeholderItemView() -> some View {
     VStack {
       Color.secondary
-        .imageConfig()
+        .imageConfig(size: itemSize)
       Text(verbatim: "Lorem ipsum")
-        .textConfig()
+        .textConfig(size: itemSize)
     }
   }
 }
 
 extension View {
-  fileprivate func imageConfig() -> some View {
-    self.frame(
-      width: CarouselView.posterSize.width,
-      height: CarouselView.posterSize.height
-    )
+  fileprivate func imageConfig(size: CGSize) -> some View {
+    self.frame(width: size.width, height: size.height)
   }
 
-  fileprivate func textConfig() -> some View {
+  fileprivate func textConfig(size: CGSize) -> some View {
     self.multilineTextAlignment(.center)
       .font(.body)
       .lineLimit(1)
-      .frame(
-        width: CarouselView.posterSize.width
-      )
+      .frame(width: size.width)
   }
 }
 
 #Preview {
   CarouselView(
     title: "Lorem Ipsum",
-    viewModel: CarouselViewModel(
-      list: .movies(.nowPlaying)
-    ),
-    action: { _ in }
+    items: [],
   )
 }

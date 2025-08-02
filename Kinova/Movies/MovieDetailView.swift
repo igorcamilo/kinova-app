@@ -15,8 +15,7 @@ struct MovieDetailView: View {
       LazyVStack(spacing: 20) {
         CarouselView(
           title: "Similar",
-          viewModel: viewModel.similar,
-          action: viewModel.onListItemTap(id:)
+          items: viewModel.similar,
         )
       }
       .padding(.vertical)
@@ -25,9 +24,6 @@ struct MovieDetailView: View {
       await viewModel.load()
     }
     .navigationTitle("Movie Detail \(viewModel.id.rawValue)")
-    .navigationDestination(item: $viewModel.movieDetail) {
-      MovieDetailView(viewModel: $0)
-    }
   }
 }
 

@@ -10,42 +10,37 @@ import SwiftUI
 struct MoviesView: View {
   @State private var viewModel = MoviesViewModel()
 
+  @Environment(\.carouselItemSize) private var carouselItemSize
+
   var body: some View {
     ScrollView(.vertical) {
       LazyVStack(spacing: 20) {
         CarouselView(
           title: "Now Playing",
-          viewModel: viewModel.nowPlaying,
-          action: viewModel.onListItemTap(id:)
+          items: viewModel.nowPlaying,
         )
         CarouselView(
           title: "Popular",
-          viewModel: viewModel.popular,
-          action: viewModel.onListItemTap(id:)
+          items: viewModel.popular,
         )
         CarouselView(
           title: "Top Rated",
-          viewModel: viewModel.topRated,
-          action: viewModel.onListItemTap(id:)
+          items: viewModel.topRated,
         )
         CarouselView(
           title: "Upcoming",
-          viewModel: viewModel.upcoming,
-          action: viewModel.onListItemTap(id:)
+          items: viewModel.upcoming,
         )
       }
       .padding(.vertical)
     }
     .refreshable {
-      await viewModel.load()
+      await viewModel.load(width: carouselItemSize.width)
     }
     .task {
-      await viewModel.load()
+      await viewModel.load(width: carouselItemSize.width)
     }
     .navigationTitle("Movies")
-    .navigationDestination(item: $viewModel.movieDetail) {
-      MovieDetailView(viewModel: $0)
-    }
   }
 }
 

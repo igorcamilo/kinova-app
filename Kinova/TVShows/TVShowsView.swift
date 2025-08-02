@@ -10,42 +10,37 @@ import SwiftUI
 struct TVShowsView: View {
   @State private var viewModel = TVShowsViewModel()
 
+  @Environment(\.carouselItemSize) private var carouselItemSize
+
   var body: some View {
     ScrollView(.vertical) {
       LazyVStack(spacing: 20) {
         CarouselView(
           title: "Airing Today",
-          viewModel: viewModel.airingToday,
-          action: viewModel.onListItemTap(id:)
+          items: viewModel.airingToday,
         )
         CarouselView(
           title: "On The Air",
-          viewModel: viewModel.onTheAir,
-          action: viewModel.onListItemTap(id:)
+          items: viewModel.onTheAir,
         )
         CarouselView(
           title: "Popular",
-          viewModel: viewModel.popular,
-          action: viewModel.onListItemTap(id:)
+          items: viewModel.popular,
         )
         CarouselView(
           title: "Top Rated",
-          viewModel: viewModel.topRated,
-          action: viewModel.onListItemTap(id:)
+          items: viewModel.topRated,
         )
       }
       .padding(.vertical)
     }
     .refreshable {
-      await viewModel.load()
+      await viewModel.load(width: carouselItemSize.width)
     }
     .task {
-      await viewModel.load()
+      await viewModel.load(width: carouselItemSize.width)
     }
     .navigationTitle("TV Shows")
-    .navigationDestination(item: $viewModel.tvShowDetail) {
-      TVShowDetailView(viewModel: $0)
-    }
   }
 }
 

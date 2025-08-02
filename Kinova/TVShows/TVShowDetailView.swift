@@ -15,8 +15,7 @@ struct TVShowDetailView: View {
       LazyVStack(spacing: 20) {
         CarouselView(
           title: "Similar",
-          viewModel: viewModel.similar,
-          action: viewModel.onListItemTap(id:)
+          items: viewModel.similar,
         )
       }
       .padding(.vertical)
@@ -25,9 +24,6 @@ struct TVShowDetailView: View {
       await viewModel.load()
     }
     .navigationTitle("TV Show Detail \(viewModel.id.rawValue)")
-    .navigationDestination(item: $viewModel.tvShowDetail) {
-      TVShowDetailView(viewModel: $0)
-    }
   }
 }
 
