@@ -10,7 +10,7 @@ import Observation
 import TMDB
 import os
 
-private let logger = Logger(subsystem: "com.igorcamilo.kinova", category: "MovieDetailViewModel")
+private let logger = Logger(subsystem: "com.igorcamilo.kinova", category: "TVShowDetailViewModel")
 
 @MainActor
 @Observable
@@ -22,28 +22,28 @@ final class TVShowDetailViewModel {
   var tvShowDetail: TVShowDetailViewModel?
 
   init(client: Client = .shared) {
-    logger.debug("Initializing MovieDetailViewModel")
+    logger.debug("Initializing TVShowDetailViewModel")
     self.client = client
   }
 
   deinit {
-    logger.debug("Deinitializing MovieDetailViewModel")
+    logger.debug("Deinitializing TVShowDetailViewModel")
   }
 
   func load(id: TVShow.ID, width: CGFloat) async {
-    logger.debug("Loading movie detail id: \(id.rawValue)")
+    logger.debug("Loading tv show detail id: \(id.rawValue)")
     do {
       async let similarTVShows = client.tvShows(list: .similar(id))
       let images = try await client.configuration().images
       let size = images.size(width: width, from: \.posterSizes)
-      similar = try await similarTVShows.results.map { movie in
-        let url = size.flatMap { images.url(size: $0, path: movie.posterPath) }
-        return CarouselItem(id: .tvShow(movie.id), imageURL: url, title: movie.name)
+      similar = try await similarTVShows.results.map { tvShow in
+        let url = size.flatMap { images.url(size: $0, path: tvShow.posterPath) }
+        return CarouselItem(id: .tvShow(tvShow.id), imageURL: url, title: tvShow.name)
       }
     } catch URLError.cancelled {
-      logger.info("Movie detail loading cancelled")
+      logger.info("TV show detail loading cancelled")
     } catch {
-      logger.warning("Failed to load movie detail: \(error)")
+      logger.warning("Failed to load tv show detail: \(error)")
     }
   }
 }
