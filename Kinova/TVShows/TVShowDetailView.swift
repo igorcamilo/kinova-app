@@ -6,37 +6,38 @@
 //
 
 import SwiftUI
+import TMDB
 
 struct TVShowDetailView: View {
-  @Bindable var viewModel: TVShowDetailViewModel
+  let id: TVShow.ID
+
+  @State private var viewModel = TVShowDetailViewModel()
+
+  @Environment(\.carouselItemSize) private var carouselItemSize
 
   var body: some View {
     ScrollView(.vertical) {
       LazyVStack(spacing: 20) {
         CarouselView(
           title: "Similar",
-          viewModel: viewModel.similar,
-          action: viewModel.onListItemTap(id:)
+          items: viewModel.similar,
         )
       }
       .padding(.vertical)
     }
     .refreshable {
-      await viewModel.load()
+      await viewModel.load(id: id, width: carouselItemSize.width)
     }
-    .navigationTitle("TV Show Detail \(viewModel.id.rawValue)")
-    .navigationDestination(item: $viewModel.tvShowDetail) {
-      TVShowDetailView(viewModel: $0)
+    .task {
+      await viewModel.load(id: id, width: carouselItemSize.width)
     }
+    .navigationTitle("TV Show Detail \(id.rawValue)")
   }
 }
 
 #Preview {
   NavigationStack {
-    TVShowDetailView(
-      viewModel: TVShowDetailViewModel(
-        id: .init(rawValue: 1)
-      )
-    )
+    let id = TVShow.ID(rawValue: 94605)
+    TVShowDetailView(id: id)
   }
 }

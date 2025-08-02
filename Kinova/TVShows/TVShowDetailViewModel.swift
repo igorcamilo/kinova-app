@@ -5,51 +5,45 @@
 //  Created by Igor Camilo on 27.07.25.
 //
 
+import Foundation
 import Observation
 import TMDB
+import os
+
+private let logger = Logger(subsystem: "com.igorcamilo.kinova", category: "TVShowDetailViewModel")
 
 @MainActor
 @Observable
 final class TVShowDetailViewModel {
   let client: Client
-  let id: TVShow.ID
 
-  let similar: CarouselViewModel
+  var similar: [CarouselItem] = []
 
   var tvShowDetail: TVShowDetailViewModel?
 
-  init(client: Client = .shared, id: TVShow.ID) {
+  init(client: Client = .shared) {
+    logger.debug("Initializing TVShowDetailViewModel")
     self.client = client
-    self.id = id
-    self.similar = CarouselViewModel(client: client, list: .tvShows(.similar(id)))
   }
 
-  func load() async {
-    await withTaskGroup { [similar] group in
-      group.addTask {
-        await similar.load()
+  deinit {
+    logger.debug("Deinitializing TVShowDetailViewModel")
+  }
+
+  func load(id: TVShow.ID, width: CGFloat) async {
+    logger.debug("Loading tv show detail id: \(id.rawValue)")
+    do {
+      async let similarTVShows = client.tvShows(list: .similar(id))
+      let images = try await client.configuration().images
+      let size = images.size(width: width, from: \.posterSizes)
+      similar = try await similarTVShows.results.map { tvShow in
+        let url = size.flatMap { images.url(size: $0, path: tvShow.posterPath) }
+        return CarouselItem(id: .tvShow(tvShow.id), imageURL: url, title: tvShow.name)
       }
+    } catch URLError.cancelled {
+      logger.info("TV show detail loading cancelled")
+    } catch {
+      logger.warning("Failed to load tv show detail: \(error)")
     }
-  }
-
-  func onListItemTap(id: CarouselViewModel.Item.ID) {
-    switch id {
-    case .tvShow(let id):
-      let viewModel = TVShowDetailViewModel(client: client, id: id)
-      tvShowDetail = viewModel
-      Task { await viewModel.load() }
-    case .movie:
-      break
-    }
-  }
-}
-
-extension TVShowDetailViewModel: Hashable {
-  nonisolated static func == (lhs: TVShowDetailViewModel, rhs: TVShowDetailViewModel) -> Bool {
-    lhs.id == rhs.id
-  }
-
-  nonisolated func hash(into hasher: inout Hasher) {
-    hasher.combine(id)
   }
 }

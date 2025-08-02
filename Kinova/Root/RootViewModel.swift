@@ -7,44 +7,41 @@
 
 import Observation
 import TMDB
+import os
+
+private let logger = Logger(subsystem: "com.igorcamilo.kinova", category: "RootViewModel")
 
 @MainActor
 @Observable
 final class RootViewModel {
   let client: Client
 
-  let moviesViewModel: MoviesViewModel
-  let tvShowsViewModel: TVShowsViewModel
-
-  var selectedTab = Tab.movies {
+  var moviesPath: [Destination] = [] {
     didSet {
-      Task {
-        await loadSelectedTab()
-      }
+      let newValue = moviesPath
+      logger.debug("Updated movies path \(newValue)")
+    }
+  }
+  var tvShowsPath: [Destination] = [] {
+    didSet {
+      let newValue = tvShowsPath
+      logger.debug("Updated TV shows path \(newValue)")
+    }
+  }
+
+  var selectedTab = RootTab.movies {
+    didSet {
+      let newValue = selectedTab.rawValue
+      logger.debug("Updated selected tab \(newValue)")
     }
   }
 
   init(client: Client = .shared) {
+    logger.debug("Initializing RootViewModel")
     self.client = client
-    self.moviesViewModel = MoviesViewModel(client: client)
-    self.tvShowsViewModel = TVShowsViewModel(client: client)
   }
 
-  func load() async {
-    await loadSelectedTab()
-  }
-
-  func loadSelectedTab() async {
-    switch selectedTab {
-    case .movies:
-      await moviesViewModel.load()
-    case .tvShows:
-      await tvShowsViewModel.load()
-    }
-  }
-
-  enum Tab: Codable, Hashable, Sendable {
-    case movies
-    case tvShows
+  deinit {
+    logger.debug("Deinitializing RootViewModel")
   }
 }

@@ -6,37 +6,38 @@
 //
 
 import SwiftUI
+import TMDB
 
 struct MovieDetailView: View {
-  @Bindable var viewModel: MovieDetailViewModel
+  let id: Movie.ID
+
+  @State private var viewModel = MovieDetailViewModel()
+
+  @Environment(\.carouselItemSize) private var carouselItemSize
 
   var body: some View {
     ScrollView(.vertical) {
       LazyVStack(spacing: 20) {
         CarouselView(
           title: "Similar",
-          viewModel: viewModel.similar,
-          action: viewModel.onListItemTap(id:)
+          items: viewModel.similar,
         )
       }
       .padding(.vertical)
     }
     .refreshable {
-      await viewModel.load()
+      await viewModel.load(id: id, width: carouselItemSize.width)
     }
-    .navigationTitle("Movie Detail \(viewModel.id.rawValue)")
-    .navigationDestination(item: $viewModel.movieDetail) {
-      MovieDetailView(viewModel: $0)
+    .task {
+      await viewModel.load(id: id, width: carouselItemSize.width)
     }
+    .navigationTitle("Movie Detail \(id.rawValue)")
   }
 }
 
 #Preview {
   NavigationStack {
-    MovieDetailView(
-      viewModel: MovieDetailViewModel(
-        id: .init(rawValue: 1)
-      )
-    )
+    let id = Movie.ID(rawValue: 569094)
+    MovieDetailView(id: id)
   }
 }

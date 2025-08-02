@@ -8,52 +8,58 @@
 import Foundation
 import Observation
 import TMDB
+import os
+
+private let logger = Logger(subsystem: "com.igorcamilo.kinova", category: "MoviesViewModel")
 
 @MainActor
 @Observable
 final class MoviesViewModel {
   let client: Client
 
-  let nowPlaying: CarouselViewModel
-  let popular: CarouselViewModel
-  let topRated: CarouselViewModel
-  let upcoming: CarouselViewModel
-
-  var movieDetail: MovieDetailViewModel?
+  var nowPlaying: [CarouselItem] = []
+  var popular: [CarouselItem] = []
+  var topRated: [CarouselItem] = []
+  var upcoming: [CarouselItem] = []
 
   init(client: Client = .shared) {
+    logger.debug("Initializing MoviesViewModel")
     self.client = client
-    self.nowPlaying = CarouselViewModel(client: client, list: .movies(.nowPlaying))
-    self.popular = CarouselViewModel(client: client, list: .movies(.popular))
-    self.topRated = CarouselViewModel(client: client, list: .movies(.topRated))
-    self.upcoming = CarouselViewModel(client: client, list: .movies(.upcoming))
   }
 
-  func load() async {
-    await withTaskGroup { [nowPlaying, popular, topRated, upcoming] group in
-      group.addTask {
-        await nowPlaying.load()
-      }
-      group.addTask {
-        await popular.load()
-      }
-      group.addTask {
-        await topRated.load()
-      }
-      group.addTask {
-        await upcoming.load()
-      }
-    }
+  deinit {
+    logger.debug("Deinitializing MoviesViewModel")
   }
 
-  func onListItemTap(id: CarouselViewModel.Item.ID) {
-    switch id {
-    case .movie(let id):
-      let viewModel = MovieDetailViewModel(client: client, id: id)
-      movieDetail = viewModel
-      Task { await viewModel.load() }
-    case .tvShow:
-      break
+  func load(width: CGFloat) async {
+    logger.debug("Loading movies")
+    do {
+      async let nowPlayingMovies = client.movies(list: .nowPlaying)
+      async let popularMovies = client.movies(list: .popular)
+      async let topRatedMovies = client.movies(list: .topRated)
+      async let upcomingMovies = client.movies(list: .upcoming)
+      let images = try await client.configuration().images
+      let size = images.size(width: width, from: \.posterSizes)
+      nowPlaying = try await nowPlayingMovies.results.map { movie in
+        let url = size.flatMap { images.url(size: $0, path: movie.posterPath) }
+        return CarouselItem(id: .movie(movie.id), imageURL: url, title: movie.title)
+      }
+      popular = try await popularMovies.results.map { movie in
+        let url = size.flatMap { images.url(size: $0, path: movie.posterPath) }
+        return CarouselItem(id: .movie(movie.id), imageURL: url, title: movie.title)
+      }
+      topRated = try await topRatedMovies.results.map { movie in
+        let url = size.flatMap { images.url(size: $0, path: movie.posterPath) }
+        return CarouselItem(id: .movie(movie.id), imageURL: url, title: movie.title)
+      }
+      upcoming = try await upcomingMovies.results.map { movie in
+        let url = size.flatMap { images.url(size: $0, path: movie.posterPath) }
+        return CarouselItem(id: .movie(movie.id), imageURL: url, title: movie.title)
+      }
+    } catch URLError.cancelled {
+      logger.info("Movies loading cancelled")
+    } catch {
+      logger.warning("Failed to load movies: \(error)")
     }
   }
 }

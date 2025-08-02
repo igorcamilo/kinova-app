@@ -8,46 +8,44 @@
 import SwiftUI
 
 struct MoviesView: View {
-  @Bindable var viewModel: MoviesViewModel
+  @State private var viewModel = MoviesViewModel()
+
+  @Environment(\.carouselItemSize) private var carouselItemSize
 
   var body: some View {
-    NavigationStack {
-      ScrollView(.vertical) {
-        LazyVStack(spacing: 20) {
-          CarouselView(
-            title: "Now Playing",
-            viewModel: viewModel.nowPlaying,
-            action: viewModel.onListItemTap(id:)
-          )
-          CarouselView(
-            title: "Popular",
-            viewModel: viewModel.popular,
-            action: viewModel.onListItemTap(id:)
-          )
-          CarouselView(
-            title: "Top Rated",
-            viewModel: viewModel.topRated,
-            action: viewModel.onListItemTap(id:)
-          )
-          CarouselView(
-            title: "Upcoming",
-            viewModel: viewModel.upcoming,
-            action: viewModel.onListItemTap(id:)
-          )
-        }
-        .padding(.vertical)
+    ScrollView(.vertical) {
+      LazyVStack(spacing: 20) {
+        CarouselView(
+          title: "Now Playing",
+          items: viewModel.nowPlaying,
+        )
+        CarouselView(
+          title: "Popular",
+          items: viewModel.popular,
+        )
+        CarouselView(
+          title: "Top Rated",
+          items: viewModel.topRated,
+        )
+        CarouselView(
+          title: "Upcoming",
+          items: viewModel.upcoming,
+        )
       }
-      .refreshable {
-        await viewModel.load()
-      }
-      .navigationTitle("Movies")
-      .navigationDestination(item: $viewModel.movieDetail) {
-        MovieDetailView(viewModel: $0)
-      }
+      .padding(.vertical)
     }
+    .refreshable {
+      await viewModel.load(width: carouselItemSize.width)
+    }
+    .task {
+      await viewModel.load(width: carouselItemSize.width)
+    }
+    .navigationTitle("Movies")
   }
 }
 
 #Preview {
-  MoviesView(viewModel: MoviesViewModel())
+  NavigationStack {
+    MoviesView()
+  }
 }

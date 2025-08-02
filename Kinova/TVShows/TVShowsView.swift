@@ -8,46 +8,44 @@
 import SwiftUI
 
 struct TVShowsView: View {
-  @Bindable var viewModel: TVShowsViewModel
+  @State private var viewModel = TVShowsViewModel()
+
+  @Environment(\.carouselItemSize) private var carouselItemSize
 
   var body: some View {
-    NavigationStack {
-      ScrollView(.vertical) {
-        LazyVStack(spacing: 20) {
-          CarouselView(
-            title: "Airing Today",
-            viewModel: viewModel.airingToday,
-            action: viewModel.onListItemTap(id:)
-          )
-          CarouselView(
-            title: "On The Air",
-            viewModel: viewModel.onTheAir,
-            action: viewModel.onListItemTap(id:)
-          )
-          CarouselView(
-            title: "Popular",
-            viewModel: viewModel.popular,
-            action: viewModel.onListItemTap(id:)
-          )
-          CarouselView(
-            title: "Top Rated",
-            viewModel: viewModel.topRated,
-            action: viewModel.onListItemTap(id:)
-          )
-        }
-        .padding(.vertical)
+    ScrollView(.vertical) {
+      LazyVStack(spacing: 20) {
+        CarouselView(
+          title: "Airing Today",
+          items: viewModel.airingToday,
+        )
+        CarouselView(
+          title: "On The Air",
+          items: viewModel.onTheAir,
+        )
+        CarouselView(
+          title: "Popular",
+          items: viewModel.popular,
+        )
+        CarouselView(
+          title: "Top Rated",
+          items: viewModel.topRated,
+        )
       }
-      .refreshable {
-        await viewModel.load()
-      }
-      .navigationTitle("TV Shows")
-      .navigationDestination(item: $viewModel.tvShowDetail) {
-        TVShowDetailView(viewModel: $0)
-      }
+      .padding(.vertical)
     }
+    .refreshable {
+      await viewModel.load(width: carouselItemSize.width)
+    }
+    .task {
+      await viewModel.load(width: carouselItemSize.width)
+    }
+    .navigationTitle("TV Shows")
   }
 }
 
 #Preview {
-  TVShowsView(viewModel: TVShowsViewModel())
+  NavigationStack {
+    TVShowsView()
+  }
 }
