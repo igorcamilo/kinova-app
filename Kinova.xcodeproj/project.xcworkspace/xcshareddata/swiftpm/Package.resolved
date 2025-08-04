@@ -6,8 +6,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/igorcamilo/tmdb-swift.git",
       "state" : {
-        "revision" : "e9747d739348c4ae8469c186c7032e661f9a611b",
-        "version" : "0.1.0"
+        "revision" : "e5f07f6b673433235982310c83b8d71c9a506e25",
+        "version" : "0.3.0"
       }
     }
   ],

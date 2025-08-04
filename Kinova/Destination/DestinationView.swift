@@ -14,9 +14,9 @@ struct DestinationView: View {
   var body: some View {
     switch destination {
     case .movie(let id):
-      MovieDetailView(id: id)
+      MovieDetailsView(id: id)
     case .tvShow(let id):
-      TVShowDetailView(id: id)
+      TVShowDetailsView(id: id)
     }
   }
 }
