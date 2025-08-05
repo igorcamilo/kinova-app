@@ -11,12 +11,10 @@ struct CarouselView: View {
   let title: LocalizedStringKey
   let items: [CarouselItem]
 
-  @Environment(\.carouselItemSize) private var itemSize
-
   var body: some View {
     VStack(alignment: .leading, spacing: 8) {
       Text(title)
-        .font(.title)
+        .font(.headline)
         .padding(.horizontal)
       if items.isEmpty {
         placeholderView()
@@ -42,16 +40,10 @@ struct CarouselView: View {
   }
 
   private func loadedItemView(_ item: CarouselItem) -> some View {
-    VStack {
-      AsyncImage(url: item.imageURL) { image in
-        image.resizable()
-      } placeholder: {
-        Color.secondary
-      }
-      .imageConfig(size: itemSize)
-      Text(item.title)
-        .textConfig(size: itemSize)
-    }
+    PosterView(
+      imageURL: item.imageURL,
+      caption: item.title
+    )
   }
 
   private func placeholderView() -> some View {
@@ -68,25 +60,10 @@ struct CarouselView: View {
   }
 
   private func placeholderItemView() -> some View {
-    VStack {
-      Color.secondary
-        .imageConfig(size: itemSize)
-      Text(verbatim: "Lorem ipsum")
-        .textConfig(size: itemSize)
-    }
-  }
-}
-
-extension View {
-  fileprivate func imageConfig(size: CGSize) -> some View {
-    self.frame(width: size.width, height: size.height)
-  }
-
-  fileprivate func textConfig(size: CGSize) -> some View {
-    self.multilineTextAlignment(.center)
-      .font(.body)
-      .lineLimit(1)
-      .frame(width: size.width)
+    PosterView(
+      imageURL: nil,
+      caption: "Lorem Ipsum"
+    )
   }
 }
 

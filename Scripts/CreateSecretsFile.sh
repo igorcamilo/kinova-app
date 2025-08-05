@@ -14,11 +14,12 @@ OUTPUT_FILE="$SCRIPT_DIR/../Kinova/KinovaSecrets.swift"
 
 # Write the Swift file
 cat > "$OUTPUT_FILE" <<EOL
-// swift-format-ignore-file
 // This file is auto-generated. Do not edit.
 
 enum KinovaSecrets {
-  static let tmdbAccessToken = "$TMDB_ACCESS_TOKEN"
+  static let tmdbAccessToken = #"""
+    $TMDB_ACCESS_TOKEN
+    """#
 }
 EOL
 

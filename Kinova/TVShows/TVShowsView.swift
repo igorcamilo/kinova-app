@@ -10,11 +10,19 @@ import SwiftUI
 struct TVShowsView: View {
   @State private var viewModel = TVShowsViewModel()
 
-  @Environment(\.carouselItemSize) private var carouselItemSize
+  @Environment(\.posterSize) private var posterSize
 
   var body: some View {
     ScrollView(.vertical) {
       LazyVStack(spacing: 20) {
+        CarouselView(
+          title: "Trending Today",
+          items: viewModel.trendingToday,
+        )
+        CarouselView(
+          title: "Trending This Week",
+          items: viewModel.trendingThisWeek,
+        )
         CarouselView(
           title: "Airing Today",
           items: viewModel.airingToday,
@@ -35,12 +43,11 @@ struct TVShowsView: View {
       .padding(.vertical)
     }
     .refreshable {
-      await viewModel.load(width: carouselItemSize.width)
+      await viewModel.load(width: posterSize.width)
     }
     .task {
-      await viewModel.load(width: carouselItemSize.width)
+      await viewModel.load(width: posterSize.width)
     }
-    .navigationTitle("TV Shows")
   }
 }
 

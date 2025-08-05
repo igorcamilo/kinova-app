@@ -14,7 +14,7 @@ private let logger = Logger(subsystem: "com.igorcamilo.kinova", category: "RootV
 @MainActor
 @Observable
 final class RootViewModel {
-  let client: Client
+  let client: TMDBClient
 
   var moviesPath: [Destination] = [] {
     didSet {
@@ -36,7 +36,7 @@ final class RootViewModel {
     }
   }
 
-  init(client: Client = .shared) {
+  init(client: TMDBClient = .shared) {
     logger.debug("Initializing RootViewModel")
     self.client = client
   }
