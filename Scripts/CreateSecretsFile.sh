@@ -18,8 +18,8 @@ cat > "$OUTPUT_FILE" <<EOL
 
 enum KinovaSecrets {
   static let tmdbAccessToken = #"""
-  $TMDB_ACCESS_TOKEN
-  """#
+    $TMDB_ACCESS_TOKEN
+    """#
 }
 EOL
 
