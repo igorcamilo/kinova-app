@@ -8,7 +8,7 @@ permissions:
   contents: read
 jobs:
   xcode-tests:
-    name: Xcode tests (${{ matrix.name }})
+    name: Xcode 16.4 (${{ matrix.name }})
     runs-on: macos-15
     strategy:
       matrix:
@@ -22,6 +22,8 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
+    - name: Install xcresultparser
+      run: brew install xcresultparser
     - name: Create secrets file
       env:
         TMDB_ACCESS_TOKEN: ${{ secrets.TMDB_ACCESS_TOKEN }}
@@ -31,23 +33,26 @@ jobs:
     - name: Build and run tests
       env:
         WARNINGS_AS_ERRORS: "YES"
-      run: xcrun xcodebuild test -project Kinova.xcodeproj -scheme Kinova -resultBundlePath "Artifacts/TestResults (${{ matrix.name }}).xcresult" -destination "${{ matrix.destination }}" CODE_SIGNING_ALLOWED=NO
-    - name: Upload Xcode result bundle
+      run: xcrun xcodebuild test -project Kinova.xcodeproj -scheme Kinova -resultBundlePath "Artifacts/testResult.xcresult" -destination "${{ matrix.destination }}" CODE_SIGNING_ALLOWED=NO
+    - if: always()
+      name: Convert xcresult to JUnit
+      run: xcresultparser -o junit Artifacts/testResult.xcresult > Artifacts/testResult.xml
+    - if: always()
+      name: Convert xcresult to HTML
+      run: xcresultparser -o html Artifacts/testResult.xcresult > Artifacts/testResult.html
+    - if: always()
+      name: Upload coverage reports to Codecov
+      uses: codecov/codecov-action@v5
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
+    - if: always()
+      name: Upload test results to Codecov
+      uses: codecov/test-results-action@v1
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
+    - if: always()
+      name: Upload artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: TestResults (${{ matrix.name }})
+        name: Artifacts (${{ matrix.name }})
         path: Artifacts
-  linter:
-    name: Swift linter
-    runs-on: macos-15
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
-    - name: Create secrets file
-      env:
-        TMDB_ACCESS_TOKEN: ${{ secrets.TMDB_ACCESS_TOKEN }}
-      run: ./Scripts/CreateSecretsFile.sh
-    - name: Select Xcode version
-      run: sudo xcode-select -s /Applications/Xcode_16.4.app
-    - name: Lint code
-      run: xcrun swift format lint . -rps
