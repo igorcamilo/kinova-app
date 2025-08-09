@@ -12,12 +12,17 @@ struct DestinationView: View {
   let destination: Destination
 
   var body: some View {
-    switch destination {
-    case .movie(let id):
-      MovieDetailsView(id: id)
-    case .tvShow(let id):
-      TVShowDetailsView(id: id)
+    Group {
+      switch destination {
+      case .movie(let id):
+        MovieDetailsView(id: id)
+      case .tvShow(let id):
+        TVShowDetailsView(id: id)
+      }
     }
+#if os(macOS)
+    .frame(minWidth: 375)
+#endif
   }
 }
 

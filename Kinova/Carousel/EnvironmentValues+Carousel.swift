@@ -8,5 +8,5 @@
 import SwiftUI
 
 extension EnvironmentValues {
-  @Entry var posterSize = CGSize(width: 160, height: 240)
+  @Entry var carouselItemHeight: CGFloat = 240
 }
