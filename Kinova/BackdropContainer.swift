@@ -46,7 +46,9 @@ struct BackdropContainer<Contents: View>: View {
       .frame(height: backdropHeight)
       .clipped()
       .offset(y: min(-scrollOffset, 0))
-      .backgroundEffect()
+      #if swift(>=6.2)
+        .backgroundEffect()
+      #endif
   }
 
   private var scrollContents: some View {
@@ -57,12 +59,14 @@ struct BackdropContainer<Contents: View>: View {
   }
 }
 
-extension View {
-  fileprivate func backgroundEffect() -> some View {
-    if #available(iOS 26.0, macOS 26.0, visionOS 26.0, *) {
-      return self.backgroundExtensionEffect()
-    } else {
-      return self
+#if swift(>=6.2)
+  extension View {
+    fileprivate func backgroundEffect() -> some View {
+      if #available(iOS 26.0, macOS 26.0, tvOS 26.0, visionOS 26.0, watchOS 26.0, *) {
+        return self.backgroundExtensionEffect()
+      } else {
+        return self
+      }
     }
   }
-}
+#endif

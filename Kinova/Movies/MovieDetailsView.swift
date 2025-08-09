@@ -25,7 +25,7 @@ struct MovieDetailsView: View {
       }
     }
     #if os(macOS)
-      .navigationTitle("TV Show Details")
+      .navigationTitle("Movie Details")
     #endif
     .refreshable { await viewModel.load(id: id) }
     .onAppear { Task { await viewModel.load(id: id) } }
