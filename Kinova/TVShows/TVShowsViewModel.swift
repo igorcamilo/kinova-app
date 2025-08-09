@@ -38,20 +38,10 @@ private let logger = Logger(
     defer { isLoading = false }
     await withTaskGroup { group in
       group.addTask(operation: loadTrendingToday)
-    }
-    await withTaskGroup { group in
       group.addTask(operation: loadTrendingThisWeek)
-    }
-    await withTaskGroup { group in
       group.addTask(operation: loadAiringToday)
-    }
-    await withTaskGroup { group in
       group.addTask(operation: loadOnTheAir)
-    }
-    await withTaskGroup { group in
       group.addTask(operation: loadPopular)
-    }
-    await withTaskGroup { group in
       group.addTask(operation: loadTopRated)
     }
   }
