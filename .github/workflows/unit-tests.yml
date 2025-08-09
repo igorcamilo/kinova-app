@@ -17,8 +17,8 @@ jobs:
           destination: platform=iOS Simulator,arch=arm64,OS=18.5,name=iPhone 16
         - name: macOS
           destination: platform=macOS,arch=arm64
-        - name: visionOS
-          destination: platform=visionOS Simulator,arch=arm64,OS=2.5,name=Apple Vision Pro
+        # - name: visionOS
+        #   destination: platform=visionOS Simulator,arch=arm64,OS=2.5,name=Apple Vision Pro
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
