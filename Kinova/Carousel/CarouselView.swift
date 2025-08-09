@@ -6,10 +6,11 @@
 //
 
 import SwiftUI
+import TMDB
 
-struct CarouselView: View {
+struct CarouselView<T: CarouselItem>: View {
   let title: LocalizedStringKey
-  let items: [CarouselItem]
+  let items: [T]
 
   var body: some View {
     VStack(alignment: .leading, spacing: 8) {
@@ -39,11 +40,8 @@ struct CarouselView: View {
     .scrollIndicators(.never)
   }
 
-  private func loadedItemView(_ item: CarouselItem) -> some View {
-    PosterView(
-      imageURL: item.imageURL,
-      caption: item.title
-    )
+  private func loadedItemView(_ item: T) -> some View {
+    CarouselItemView(path: item.image)
   }
 
   private func placeholderView() -> some View {
@@ -60,16 +58,13 @@ struct CarouselView: View {
   }
 
   private func placeholderItemView() -> some View {
-    PosterView(
-      imageURL: nil,
-      caption: "Lorem Ipsum"
-    )
+    CarouselItemView(path: nil)
   }
 }
 
 #Preview {
   CarouselView(
     title: "Lorem Ipsum",
-    items: [],
+    items: [] as [Movie],
   )
 }

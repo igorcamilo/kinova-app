@@ -10,54 +10,87 @@ import Observation
 import TMDB
 import os
 
-private let logger = Logger(subsystem: "com.igorcamilo.kinova", category: "MoviesViewModel")
+private let logger = Logger(
+  subsystem: Constants.subsystem,
+  category: #fileID
+)
 
-@MainActor
-@Observable
-final class MoviesViewModel {
+@MainActor @Observable final class MoviesViewModel {
   let client: TMDBClient
 
-  var trendingToday: [CarouselItem] = []
-  var trendingThisWeek: [CarouselItem] = []
-  var nowPlaying: [CarouselItem] = []
-  var popular: [CarouselItem] = []
-  var topRated: [CarouselItem] = []
-  var upcoming: [CarouselItem] = []
+  private(set) var isLoading = false
+  private(set) var trendingToday: [Movie] = []
+  private(set) var trendingThisWeek: [Movie] = []
+  private(set) var nowPlaying: [Movie] = []
+  private(set) var popular: [Movie] = []
+  private(set) var topRated: [Movie] = []
+  private(set) var upcoming: [Movie] = []
 
   init(client: TMDBClient = .shared) {
-    logger.debug("Initializing MoviesViewModel")
     self.client = client
   }
 
-  deinit {
-    logger.debug("Deinitializing MoviesViewModel")
+  func load() async {
+    if isLoading {
+      return
+    }
+    isLoading = true
+    defer { isLoading = false }
+    await withTaskGroup { group in
+      group.addTask(operation: loadTrendingToday)
+      group.addTask(operation: loadTrendingThisWeek)
+      group.addTask(operation: loadNowPlaying)
+      group.addTask(operation: loadPopular)
+      group.addTask(operation: loadTopRated)
+      group.addTask(operation: loadUpcoming)
+    }
   }
 
-  func load(width: CGFloat) async {
-    logger.debug("Loading movies")
+  private func loadTrendingToday() async {
     do {
-      async let trendingTodayMovies = client.movies(list: .trending(.day))
-      async let trendingThisWeekMovies = client.movies(list: .trending(.week))
-      async let nowPlayingMovies = client.movies(list: .nowPlaying)
-      async let popularMovies = client.movies(list: .popular)
-      async let topRatedMovies = client.movies(list: .topRated)
-      async let upcomingMovies = client.movies(list: .upcoming)
-      let images = try await client.configuration().images
-      let size = images.size(width: width, from: \.posterSizes)
-      func mapMovie(_ movie: Movie) throws -> CarouselItem {
-        let url = size.flatMap { images.url(size: $0, path: movie.posterPath) }
-        return CarouselItem(id: .movie(movie.id), imageURL: url, title: movie.title)
-      }
-      trendingToday = try await trendingTodayMovies.results.map(mapMovie)
-      trendingThisWeek = try await trendingThisWeekMovies.results.map(mapMovie)
-      nowPlaying = try await nowPlayingMovies.results.map(mapMovie)
-      popular = try await popularMovies.results.map(mapMovie)
-      topRated = try await topRatedMovies.results.map(mapMovie)
-      upcoming = try await upcomingMovies.results.map(mapMovie)
-    } catch URLError.cancelled {
-      logger.info("Movies loading cancelled")
+      trendingToday = try await client.movies(list: .trending(.day)).results
     } catch {
-      logger.warning("Failed to load movies: \(error)")
+      logger.error("\(#function) error: \(error)")
+    }
+  }
+
+  private func loadTrendingThisWeek() async {
+    do {
+      trendingThisWeek = try await client.movies(list: .trending(.week)).results
+    } catch {
+      logger.error("\(#function) error: \(error)")
+    }
+  }
+
+  private func loadNowPlaying() async {
+    do {
+      nowPlaying = try await client.movies(list: .nowPlaying).results
+    } catch {
+      logger.error("\(#function) error: \(error)")
+    }
+  }
+
+  private func loadPopular() async {
+    do {
+      popular = try await client.movies(list: .popular).results
+    } catch {
+      logger.error("\(#function) error: \(error)")
+    }
+  }
+
+  private func loadTopRated() async {
+    do {
+      topRated = try await client.movies(list: .topRated).results
+    } catch {
+      logger.error("\(#function) error: \(error)")
+    }
+  }
+
+  private func loadUpcoming() async {
+    do {
+      upcoming = try await client.movies(list: .upcoming).results
+    } catch {
+      logger.error("\(#function) error: \(error)")
     }
   }
 }

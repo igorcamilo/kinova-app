@@ -13,29 +13,22 @@ struct TVShowDetailsView: View {
 
   @State private var viewModel = TVShowDetailsViewModel()
 
-  @Environment(\.posterSize) private var posterSize
+  private var carouselItems: [TVShow] {
+    viewModel.value?.similar?.results ?? []
+  }
 
   var body: some View {
-    ScrollView(.vertical) {
+    BackdropContainer(path: viewModel.value?.backdropPath) {
       LazyVStack(spacing: 20) {
-        PosterView(
-          imageURL: viewModel.posterURL,
-          caption: viewModel.title
-        )
-        .environment(\.posterSize, CGSize(width: 260, height: 390))
-        CarouselView(
-          title: "Similar",
-          items: viewModel.similar,
-        )
+        Spacer().frame(height: 20)
+        CarouselView(title: "Similar", items: carouselItems)
       }
-      .padding(.vertical)
     }
-    .refreshable {
-      await viewModel.load(id: id, bigWidth: 260, smallWidth: posterSize.width)
-    }
-    .task {
-      await viewModel.load(id: id, bigWidth: 260, smallWidth: posterSize.width)
-    }
+    #if os(macOS)
+      .navigationTitle("TV Show Details")
+    #endif
+    .refreshable { await viewModel.load(id: id) }
+    .onAppear { Task { await viewModel.load(id: id) } }
   }
 }
 

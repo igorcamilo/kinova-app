@@ -10,54 +10,87 @@ import Observation
 import TMDB
 import os
 
-private let logger = Logger(subsystem: "com.igorcamilo.kinova", category: "TVShowsViewModel")
+private let logger = Logger(
+  subsystem: Constants.subsystem,
+  category: #fileID
+)
 
-@MainActor
-@Observable
-final class TVShowsViewModel {
+@MainActor @Observable final class TVShowsViewModel {
   let client: TMDBClient
 
-  var trendingToday: [CarouselItem] = []
-  var trendingThisWeek: [CarouselItem] = []
-  var airingToday: [CarouselItem] = []
-  var onTheAir: [CarouselItem] = []
-  var popular: [CarouselItem] = []
-  var topRated: [CarouselItem] = []
+  private(set) var isLoading = false
+  private(set) var trendingToday: [TVShow] = []
+  private(set) var trendingThisWeek: [TVShow] = []
+  private(set) var airingToday: [TVShow] = []
+  private(set) var onTheAir: [TVShow] = []
+  private(set) var popular: [TVShow] = []
+  private(set) var topRated: [TVShow] = []
 
   init(client: TMDBClient = .shared) {
-    logger.debug("Initializing TVShowsViewModel")
     self.client = client
   }
 
-  deinit {
-    logger.debug("Deinitializing TVShowsViewModel")
+  func load() async {
+    if isLoading {
+      return
+    }
+    isLoading = true
+    defer { isLoading = false }
+    await withTaskGroup { group in
+      group.addTask(operation: loadTrendingToday)
+      group.addTask(operation: loadTrendingThisWeek)
+      group.addTask(operation: loadAiringToday)
+      group.addTask(operation: loadOnTheAir)
+      group.addTask(operation: loadPopular)
+      group.addTask(operation: loadTopRated)
+    }
   }
 
-  func load(width: CGFloat) async {
-    logger.debug("Loading TV shows")
+  private func loadTrendingToday() async {
     do {
-      async let trendingTodayTVShows = client.tvShows(list: .trending(.day))
-      async let trendingThisWeekTVShows = client.tvShows(list: .trending(.week))
-      async let airingTodayTVShows = client.tvShows(list: .airingToday)
-      async let onTheAirTVShows = client.tvShows(list: .onTheAir)
-      async let popularTVShows = client.tvShows(list: .popular)
-      async let topRatedTVShows = client.tvShows(list: .topRated)
-      let images = try await client.configuration().images
-      let size = images.size(width: width, from: \.posterSizes)
-      func mapTVShow(_ tvShow: TVShow) throws -> CarouselItem {
-        let url = size.flatMap { images.url(size: $0, path: tvShow.posterPath) }
-        return CarouselItem(id: .tvShow(tvShow.id), imageURL: url, title: tvShow.name)
-      }
-      trendingToday = try await trendingTodayTVShows.results.map(mapTVShow)
-      trendingThisWeek = try await trendingThisWeekTVShows.results.map(mapTVShow)
-      airingToday = try await airingTodayTVShows.results.map(mapTVShow)
-      onTheAir = try await onTheAirTVShows.results.map(mapTVShow)
-      popular = try await popularTVShows.results.map(mapTVShow)
-      topRated = try await topRatedTVShows.results.map(mapTVShow)
-    } catch URLError.cancelled {
-      logger.info("TV shows loading cancelled")
+      trendingToday = try await client.tvShows(list: .trending(.day)).results
     } catch {
-      logger.warning("Failed to load TV shows: \(error)")
+      logger.error("\(#function) error: \(error)")
+    }
+  }
+
+  private func loadTrendingThisWeek() async {
+    do {
+      trendingThisWeek = try await client.tvShows(list: .trending(.week)).results
+    } catch {
+      logger.error("\(#function) error: \(error)")
+    }
+  }
+
+  private func loadAiringToday() async {
+    do {
+      airingToday = try await client.tvShows(list: .airingToday).results
+    } catch {
+      logger.error("\(#function) error: \(error)")
+    }
+  }
+
+  private func loadOnTheAir() async {
+    do {
+      onTheAir = try await client.tvShows(list: .onTheAir).results
+    } catch {
+      logger.error("\(#function) error: \(error)")
+    }
+  }
+
+  private func loadPopular() async {
+    do {
+      popular = try await client.tvShows(list: .popular).results
+    } catch {
+      logger.error("\(#function) error: \(error)")
+    }
+  }
+
+  private func loadTopRated() async {
+    do {
+      topRated = try await client.tvShows(list: .topRated).results
+    } catch {
+      logger.error("\(#function) error: \(error)")
     }
   }
 }
