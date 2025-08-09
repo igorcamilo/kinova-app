@@ -24,6 +24,9 @@ struct TVShowDetailsView: View {
         CarouselView(title: "Similar", items: carouselItems)
       }
     }
+    #if os(macOS)
+      .navigationTitle("TV Show Details")
+    #endif
     .refreshable { await viewModel.load(id: id) }
     .onAppear { Task { await viewModel.load(id: id) } }
   }

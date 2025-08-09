@@ -59,7 +59,7 @@ struct BackdropContainer<Contents: View>: View {
 
 extension View {
   fileprivate func backgroundEffect() -> some View {
-    if #available(macOS 26.0, *) {
+    if #available(iOS 26.0, macOS 26.0, visionOS 26.0, *) {
       return self.backgroundExtensionEffect()
     } else {
       return self
