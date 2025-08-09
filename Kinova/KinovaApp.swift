@@ -14,9 +14,9 @@ import SwiftUI
     WindowGroup {
       RootView()
         .environment(configuration)
-#if os(macOS)
-        .frame(minHeight: 375)
-#endif
+        #if os(macOS)
+          .frame(minHeight: 375)
+        #endif
     }
   }
 }

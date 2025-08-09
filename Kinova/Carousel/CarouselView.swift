@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import TMDB
 
 struct CarouselView<T: CarouselItem>: View {
   let title: LocalizedStringKey
@@ -62,8 +63,8 @@ struct CarouselView<T: CarouselItem>: View {
 }
 
 #Preview {
-//  CarouselView(
-//    title: "Lorem Ipsum",
-//    items: [],
-//  )
+  CarouselView(
+    title: "Lorem Ipsum",
+    items: [] as [Movie],
+  )
 }

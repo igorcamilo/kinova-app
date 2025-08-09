@@ -25,9 +25,9 @@ struct TVShowsView: View {
     .refreshable { await viewModel.load() }
     .onAppear { Task { await viewModel.load() } }
     .navigationTitle("TV Shows")
-#if os(macOS)
-    .frame(minWidth: 375)
-#endif
+    #if os(macOS)
+      .frame(minWidth: 375)
+    #endif
   }
 }
 

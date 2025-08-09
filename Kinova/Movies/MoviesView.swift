@@ -25,9 +25,9 @@ struct MoviesView: View {
     .refreshable { await viewModel.load() }
     .onAppear { Task { await viewModel.load() } }
     .navigationTitle("Movies")
-#if os(macOS)
-    .frame(minWidth: 375)
-#endif
+    #if os(macOS)
+      .frame(minWidth: 375)
+    #endif
   }
 }
 

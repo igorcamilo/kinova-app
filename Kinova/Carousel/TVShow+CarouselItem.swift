@@ -11,11 +11,11 @@ extension TVShow: CarouselItem {
   var caption: String? {
     name
   }
-  
+
   var destination: Destination {
     .tvShow(id)
   }
-  
+
   var image: CarouselImage? {
     guard let posterPath else {
       return nil

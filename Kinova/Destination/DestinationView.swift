@@ -20,9 +20,9 @@ struct DestinationView: View {
         TVShowDetailsView(id: id)
       }
     }
-#if os(macOS)
-    .frame(minWidth: 375)
-#endif
+    #if os(macOS)
+      .frame(minWidth: 375)
+    #endif
   }
 }
 
