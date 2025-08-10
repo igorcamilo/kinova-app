@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct RootView: View {
+  @Environment(\.scenePhase) private var scenePhase
+  @SceneStorage("state") private var state: Data?
   @State private var viewModel = RootViewModel()
 
   var body: some View {
@@ -24,6 +26,17 @@ struct RootView: View {
       }
     }
     .tabViewStyle(.sidebarAdaptable)
+    .onAppear { viewModel.restoreData(from: state) }
+    .onChange(of: scenePhase) {
+      switch $1 {
+      case .inactive:
+        state = viewModel.restorationData()
+      case .active, .background:
+        break
+      @unknown default:
+        break
+      }
+    }
   }
 }
 

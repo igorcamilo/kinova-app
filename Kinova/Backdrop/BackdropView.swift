@@ -7,7 +7,6 @@
 
 import SwiftUI
 import TMDB
-import os
 
 struct BackdropView: View {
   let path: BackdropPath?

@@ -12,7 +12,7 @@ struct MoviesView: View {
 
   var body: some View {
     ScrollView(.vertical) {
-      LazyVStack(spacing: 20) {
+      VStack(spacing: 20) {
         ImageCarousel(title: "Trending Today", items: viewModel.trendingToday)
         ImageCarousel(title: "Trending This Week", items: viewModel.trendingThisWeek)
         ImageCarousel(title: "Now Playing", items: viewModel.nowPlaying)
