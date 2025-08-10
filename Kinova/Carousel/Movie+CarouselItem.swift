@@ -13,7 +13,7 @@ extension Movie: CarouselItem {
   }
 
   var destination: Destination {
-    .movie(id)
+    .movie(id: id, title: title)
   }
 
   var image: CarouselImage? {

@@ -10,6 +10,7 @@ import TMDB
 
 struct TVShowDetailsView: View {
   let id: TVShow.ID
+  let title: String
 
   @State private var viewModel = TVShowDetailsViewModel()
 
@@ -19,14 +20,18 @@ struct TVShowDetailsView: View {
 
   var body: some View {
     BackdropContainer(path: viewModel.value?.backdropPath) {
-      LazyVStack(spacing: 20) {
-        Spacer().frame(height: 20)
-        CarouselView(title: "Similar", items: carouselItems)
+      LazyVStack(alignment: .leading, spacing: 8) {
+        if let overview = viewModel.value?.overview {
+          Text(overview)
+            .font(.body)
+            .padding(.horizontal)
+        }
+        Spacer().frame(height: 8)
+        CarouselView(title: "Similar TV Shows", items: carouselItems)
       }
+      .padding(.vertical, 8)
     }
-    #if os(macOS)
-      .navigationTitle("TV Show Details")
-    #endif
+    .navigationTitle(viewModel.value?.name ?? title)
     .refreshable { await viewModel.load(id: id) }
     .onAppear { Task { await viewModel.load(id: id) } }
   }
@@ -34,6 +39,6 @@ struct TVShowDetailsView: View {
 
 #Preview {
   NavigationStack {
-    TVShowDetailsView(id: 94605)
+    TVShowDetailsView(id: 94605, title: "Arcane")
   }
 }

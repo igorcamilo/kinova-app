@@ -14,10 +14,10 @@ struct DestinationView: View {
   var body: some View {
     Group {
       switch destination {
-      case .movie(let id):
-        MovieDetailsView(id: id)
-      case .tvShow(let id):
-        TVShowDetailsView(id: id)
+      case .movie(let id, let title):
+        MovieDetailsView(id: id, title: title)
+      case .tvShow(let id, let title):
+        TVShowDetailsView(id: id, title: title)
       }
     }
     #if os(macOS)
@@ -29,13 +29,15 @@ struct DestinationView: View {
 #Preview("Movie") {
   NavigationStack {
     let id = Movie.ID(rawValue: 569094)
-    DestinationView(destination: .movie(id))
+    let title = "Spider-Man: Across the Spider-Verse"
+    DestinationView(destination: .movie(id: id, title: title))
   }
 }
 
 #Preview("TV Show") {
   NavigationStack {
     let id = TVShow.ID(rawValue: 94605)
-    DestinationView(destination: .tvShow(id))
+    let title = "Arcane"
+    DestinationView(destination: .tvShow(id: id, title: title))
   }
 }

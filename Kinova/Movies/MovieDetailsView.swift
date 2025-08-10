@@ -10,6 +10,7 @@ import TMDB
 
 struct MovieDetailsView: View {
   let id: Movie.ID
+  let title: String
 
   @State private var viewModel = MovieDetailsViewModel()
 
@@ -19,14 +20,18 @@ struct MovieDetailsView: View {
 
   var body: some View {
     BackdropContainer(path: viewModel.value?.backdropPath) {
-      LazyVStack(spacing: 20) {
-        Spacer().frame(height: 20)
-        CarouselView(title: "Similar", items: carouselItems)
+      LazyVStack(alignment: .leading, spacing: 8) {
+        if let overview = viewModel.value?.overview {
+          Text(overview)
+            .font(.body)
+            .padding(.horizontal)
+        }
+        Spacer().frame(height: 8)
+        CarouselView(title: "Similar Movies", items: carouselItems)
       }
+      .padding(.vertical, 8)
     }
-    #if os(macOS)
-      .navigationTitle("Movie Details")
-    #endif
+    .navigationTitle(viewModel.value?.title ?? title)
     .refreshable { await viewModel.load(id: id) }
     .onAppear { Task { await viewModel.load(id: id) } }
   }
@@ -34,6 +39,6 @@ struct MovieDetailsView: View {
 
 #Preview {
   NavigationStack {
-    MovieDetailsView(id: 569094)
+    MovieDetailsView(id: 569094, title: "Spider-Man: Across the Spider-Verse")
   }
 }

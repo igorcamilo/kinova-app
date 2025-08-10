@@ -13,9 +13,7 @@ struct BackdropView: View {
   let path: BackdropPath?
 
   @Environment(Configuration.self) private var configuration
-
   @Environment(Dimensions.self) private var dimensions
-
   @Environment(\.displayScale) private var displayScale
 
   private var images: Images? {

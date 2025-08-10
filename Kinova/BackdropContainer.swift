@@ -13,7 +13,6 @@ struct BackdropContainer<Contents: View>: View {
   let contents: Contents
 
   @State private var dimensions = Dimensions()
-  @State private var scrollOffset = CGFloat.zero
 
   init(
     path: BackdropPath?,
@@ -25,27 +24,17 @@ struct BackdropContainer<Contents: View>: View {
 
   var body: some View {
     ScrollView(.vertical) { scrollContents }
-      .background(alignment: .top) { background }
-      .onScrollGeometryChange(for: CGFloat.self) {
-        $0.contentInsets.top + $0.contentOffset.y
-      } action: {
-        scrollOffset = $1
-      }
       .onGeometryChange(for: CGSize.self, of: \.size) {
         dimensions.size = $1
       }
       .environment(dimensions)
   }
 
-  private var backdropHeight: CGFloat {
-    min(dimensions.size.height / 2, 400)
-  }
-
-  private var background: some View {
+  private var backdropView: some View {
     BackdropView(path: path)
-      .frame(height: backdropHeight)
+      .aspectRatio(16/9, contentMode: .fill)
+      .frame(maxHeight: dimensions.size.height / 2)
       .clipped()
-      .offset(y: min(-scrollOffset, 0))
       #if swift(>=6.2)
         .backgroundEffect()
       #endif
@@ -53,7 +42,7 @@ struct BackdropContainer<Contents: View>: View {
 
   private var scrollContents: some View {
     LazyVStack(spacing: 0) {
-      Spacer().frame(height: backdropHeight)
+      backdropView
       contents
     }
   }
