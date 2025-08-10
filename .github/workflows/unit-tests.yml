@@ -37,25 +37,25 @@ jobs:
       run: xcrun simctl list
     # - name: Build and run tests
     #   run: xcrun xcodebuild test -project Kinova.xcodeproj -scheme Kinova -resultBundlePath "Artifacts/testResult.xcresult" -destination "${{ matrix.destination }}" -enableCodeCoverage YES CODE_SIGNING_ALLOWED=NO SWIFT_TREAT_WARNINGS_AS_ERRORS=YES SWIFT_SUPPRESS_WARNINGS=NO
-    - if: always()
-      name: Convert xcresult to JUnit
-      run: xcresultparser -o junit Artifacts/testResult.xcresult > Artifacts/testResult.xml
-    - if: always()
-      name: Convert xcresult to HTML
-      run: xcresultparser -o html Artifacts/testResult.xcresult > Artifacts/testResult.html
-    - if: always()
-      name: Upload coverage reports to Codecov
-      uses: codecov/codecov-action@v5
-      with:
-        token: ${{ secrets.CODECOV_TOKEN }}
-    - if: always()
-      name: Upload test results to Codecov
-      uses: codecov/test-results-action@v1
-      with:
-        token: ${{ secrets.CODECOV_TOKEN }}
-    - if: always()
-      name: Upload artifacts
-      uses: actions/upload-artifact@v4
-      with:
-        name: Artifacts (${{ matrix.name }})
-        path: Artifacts
+    # - if: always()
+    #   name: Convert xcresult to JUnit
+    #   run: xcresultparser -o junit Artifacts/testResult.xcresult > Artifacts/testResult.xml
+    # - if: always()
+    #   name: Convert xcresult to HTML
+    #   run: xcresultparser -o html Artifacts/testResult.xcresult > Artifacts/testResult.html
+    # - if: always()
+    #   name: Upload coverage reports to Codecov
+    #   uses: codecov/codecov-action@v5
+    #   with:
+    #     token: ${{ secrets.CODECOV_TOKEN }}
+    # - if: always()
+    #   name: Upload test results to Codecov
+    #   uses: codecov/test-results-action@v1
+    #   with:
+    #     token: ${{ secrets.CODECOV_TOKEN }}
+    # - if: always()
+    #   name: Upload artifacts
+    #   uses: actions/upload-artifact@v4
+    #   with:
+    #     name: Artifacts (${{ matrix.name }})
+    #     path: Artifacts

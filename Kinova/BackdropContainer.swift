@@ -32,7 +32,7 @@ struct BackdropContainer<Contents: View>: View {
 
   private var backdropView: some View {
     BackdropView(path: path)
-      .aspectRatio(16/9, contentMode: .fill)
+      .aspectRatio(16 / 9, contentMode: .fill)
       .frame(maxHeight: dimensions.size.height / 2)
       .clipped()
       #if swift(>=6.2)
