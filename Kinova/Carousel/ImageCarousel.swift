@@ -81,7 +81,7 @@ struct ImageCarousel<Item: ImageCarouselItem>: View {
       .frame(width: width, height: height)
       .clipped()
       .onAppear {
-        Task { @MainActor in
+        Task {
           await configuration.loadIfNeeded()
         }
       }

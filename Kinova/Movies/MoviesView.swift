@@ -26,7 +26,7 @@ struct MoviesView: View {
     .navigationTitle("Movies")
     .refreshable { await viewModel.load() }
     .onAppear {
-      Task { @MainActor in
+      Task {
         await viewModel.load()
       }
     }

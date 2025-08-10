@@ -44,7 +44,7 @@ struct TextCarousel<Item: TextCarouselItem>: View {
   }
 }
 
-protocol TextCarouselItem: Identifiable {
+protocol TextCarouselItem: Codable, Hashable, Identifiable, Sendable {
   var destination: Destination { get }
   var title: String { get }
 

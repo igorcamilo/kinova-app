@@ -46,7 +46,7 @@ struct BackdropView: View {
       Color.secondary
     }
     .onAppear {
-      Task { @MainActor in
+      Task {
         await configuration.loadIfNeeded()
       }
     }
