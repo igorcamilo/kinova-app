@@ -14,11 +14,11 @@ jobs:
       matrix:
         include:
         - name: iOS
-          destination: platform=iOS Simulator,arch=arm64,OS=26.0,name=iPhone 16
+          destination: platform=iOS Simulator,arch=arm64,OS=18.5,name=iPhone 16
         - name: macOS
           destination: platform=macOS,arch=arm64
         - name: visionOS
-          destination: platform=visionOS Simulator,arch=arm64,OS=26.0,name=Apple Vision Pro 4K
+          destination: platform=visionOS Simulator,arch=arm64,OS=2.5,name=Apple Vision Pro 4K
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
@@ -35,27 +35,27 @@ jobs:
       run: xcrun xcodebuild -downloadPlatform ${{ matrix.name }}
     - name: List destinations
       run: xcrun simctl list
-    # - name: Build and run tests
-    #   run: xcrun xcodebuild test -project Kinova.xcodeproj -scheme Kinova -resultBundlePath "Artifacts/testResult.xcresult" -destination "${{ matrix.destination }}" -enableCodeCoverage YES CODE_SIGNING_ALLOWED=NO SWIFT_TREAT_WARNINGS_AS_ERRORS=YES SWIFT_SUPPRESS_WARNINGS=NO
-    # - if: always()
-    #   name: Convert xcresult to JUnit
-    #   run: xcresultparser -o junit Artifacts/testResult.xcresult > Artifacts/testResult.xml
-    # - if: always()
-    #   name: Convert xcresult to HTML
-    #   run: xcresultparser -o html Artifacts/testResult.xcresult > Artifacts/testResult.html
-    # - if: always()
-    #   name: Upload coverage reports to Codecov
-    #   uses: codecov/codecov-action@v5
-    #   with:
-    #     token: ${{ secrets.CODECOV_TOKEN }}
-    # - if: always()
-    #   name: Upload test results to Codecov
-    #   uses: codecov/test-results-action@v1
-    #   with:
-    #     token: ${{ secrets.CODECOV_TOKEN }}
-    # - if: always()
-    #   name: Upload artifacts
-    #   uses: actions/upload-artifact@v4
-    #   with:
-    #     name: Artifacts (${{ matrix.name }})
-    #     path: Artifacts
+    - name: Build and run tests
+      run: xcrun xcodebuild test -project Kinova.xcodeproj -scheme Kinova -resultBundlePath "Artifacts/testResult.xcresult" -destination "${{ matrix.destination }}" -enableCodeCoverage YES CODE_SIGNING_ALLOWED=NO SWIFT_TREAT_WARNINGS_AS_ERRORS=YES SWIFT_SUPPRESS_WARNINGS=NO
+    - if: always()
+      name: Convert xcresult to JUnit
+      run: xcresultparser -o junit Artifacts/testResult.xcresult > Artifacts/testResult.xml
+    - if: always()
+      name: Convert xcresult to HTML
+      run: xcresultparser -o html Artifacts/testResult.xcresult > Artifacts/testResult.html
+    - if: always()
+      name: Upload coverage reports to Codecov
+      uses: codecov/codecov-action@v5
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
+    - if: always()
+      name: Upload test results to Codecov
+      uses: codecov/test-results-action@v1
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
+    - if: always()
+      name: Upload artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: Artifacts (${{ matrix.name }})
+        path: Artifacts
