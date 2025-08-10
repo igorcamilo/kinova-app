@@ -11,7 +11,7 @@ extension Genre: TextCarouselItem {
   var destination: Destination {
     .genre(id: id, title: name)
   }
-  
+
   var image: CarouselImage? { nil }
 
   var title: String { name }

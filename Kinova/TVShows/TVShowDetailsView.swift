@@ -36,7 +36,11 @@ struct TVShowDetailsView: View {
     .containerGeometry()
     .navigationTitle(viewModel.value?.name ?? title)
     .refreshable { await viewModel.load(id: id) }
-    .onAppear { Task { await viewModel.load(id: id) } }
+    .onAppear {
+      Task { @MainActor in
+        await viewModel.load(id: id)
+      }
+    }
   }
 }
 

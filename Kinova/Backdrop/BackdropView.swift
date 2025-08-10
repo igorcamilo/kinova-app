@@ -45,6 +45,10 @@ struct BackdropView: View {
     } placeholder: {
       Color.secondary
     }
-    .onAppear { Task { await configuration.loadIfNeeded() } }
+    .onAppear {
+      Task { @MainActor in
+        await configuration.loadIfNeeded()
+      }
+    }
   }
 }

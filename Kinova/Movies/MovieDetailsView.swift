@@ -36,7 +36,11 @@ struct MovieDetailsView: View {
     .containerGeometry()
     .navigationTitle(viewModel.value?.title ?? title)
     .refreshable { await viewModel.load(id: id) }
-    .onAppear { Task { await viewModel.load(id: id) } }
+    .onAppear {
+      Task { @MainActor in
+        await viewModel.load(id: id)
+      }
+    }
   }
 }
 

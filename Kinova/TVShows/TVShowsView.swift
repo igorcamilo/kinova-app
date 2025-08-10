@@ -25,7 +25,11 @@ struct TVShowsView: View {
     .containerGeometry()
     .navigationTitle("TV Shows")
     .refreshable { await viewModel.load() }
-    .onAppear { Task { await viewModel.load() } }
+    .onAppear {
+      Task { @MainActor in
+        await viewModel.load()
+      }
+    }
     #if os(macOS)
       .frame(minWidth: 375)
     #endif
