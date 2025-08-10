@@ -13,7 +13,7 @@ extension TVShow: CarouselItem {
   }
 
   var destination: Destination {
-    .tvShow(id)
+    .tvShow(id: id, title: name)
   }
 
   var image: CarouselImage? {
