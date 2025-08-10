@@ -18,7 +18,7 @@ private let logger = Logger(
   category: #fileID
 )
 
-@MainActor @Observable final class RootViewModel {
+@Observable final class RootViewModel {
   let client: TMDBClient
 
   var moviesPath: [Destination] = []
