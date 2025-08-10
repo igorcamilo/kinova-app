@@ -14,10 +14,6 @@ struct TVShowDetailsView: View {
 
   @State private var viewModel = TVShowDetailsViewModel()
 
-  private var carouselItems: [TVShow] {
-    viewModel.value?.similar?.results ?? []
-  }
-
   var body: some View {
     BackdropContainer(path: viewModel.value?.backdropPath) {
       LazyVStack(alignment: .leading, spacing: 16) {
@@ -26,11 +22,18 @@ struct TVShowDetailsView: View {
             .font(.body)
             .horizontalMargin()
         }
-        GenreCarousel(title: "Genres", genres: viewModel.value?.genres)
-        CarouselView(title: "Similar TV Shows", items: carouselItems)
+        TextCarousel(
+          title: "Genres",
+          items: viewModel.value?.genres
+        )
+        ImageCarousel(
+          title: "Similar TV Shows",
+          items: viewModel.value?.similar?.results
+        )
       }
       .padding(.vertical, 16)
     }
+    .containerGeometry()
     .navigationTitle(viewModel.value?.name ?? title)
     .refreshable { await viewModel.load(id: id) }
     .onAppear { Task { await viewModel.load(id: id) } }

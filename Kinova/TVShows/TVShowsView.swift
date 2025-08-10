@@ -13,18 +13,19 @@ struct TVShowsView: View {
   var body: some View {
     ScrollView(.vertical) {
       LazyVStack(spacing: 20) {
-        CarouselView(title: "Trending Today", items: viewModel.trendingToday)
-        CarouselView(title: "Trending This Week", items: viewModel.trendingThisWeek)
-        CarouselView(title: "Airing Today", items: viewModel.airingToday)
-        CarouselView(title: "On The Air", items: viewModel.onTheAir)
-        CarouselView(title: "Popular", items: viewModel.popular)
-        CarouselView(title: "Top Rated", items: viewModel.topRated)
+        ImageCarousel(title: "Trending Today", items: viewModel.trendingToday)
+        ImageCarousel(title: "Trending This Week", items: viewModel.trendingThisWeek)
+        ImageCarousel(title: "Airing Today", items: viewModel.airingToday)
+        ImageCarousel(title: "On The Air", items: viewModel.onTheAir)
+        ImageCarousel(title: "Popular", items: viewModel.popular)
+        ImageCarousel(title: "Top Rated", items: viewModel.topRated)
       }
       .padding(.vertical)
     }
+    .containerGeometry()
+    .navigationTitle("TV Shows")
     .refreshable { await viewModel.load() }
     .onAppear { Task { await viewModel.load() } }
-    .navigationTitle("TV Shows")
     #if os(macOS)
       .frame(minWidth: 375)
     #endif

@@ -19,12 +19,12 @@ private let logger = Logger(
   let client: TMDBClient
 
   private(set) var isLoading = false
-  private(set) var trendingToday: [Movie] = []
-  private(set) var trendingThisWeek: [Movie] = []
-  private(set) var nowPlaying: [Movie] = []
-  private(set) var popular: [Movie] = []
-  private(set) var topRated: [Movie] = []
-  private(set) var upcoming: [Movie] = []
+  private(set) var trendingToday: [Movie]?
+  private(set) var trendingThisWeek: [Movie]?
+  private(set) var nowPlaying: [Movie]?
+  private(set) var popular: [Movie]?
+  private(set) var topRated: [Movie]?
+  private(set) var upcoming: [Movie]?
 
   init(client: TMDBClient = .shared) {
     self.client = client
