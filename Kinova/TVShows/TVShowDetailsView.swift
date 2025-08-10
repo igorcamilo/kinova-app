@@ -20,16 +20,16 @@ struct TVShowDetailsView: View {
 
   var body: some View {
     BackdropContainer(path: viewModel.value?.backdropPath) {
-      LazyVStack(alignment: .leading, spacing: 8) {
+      LazyVStack(alignment: .leading, spacing: 16) {
         if let overview = viewModel.value?.overview {
           Text(overview)
             .font(.body)
-            .padding(.horizontal)
+            .horizontalMargin()
         }
-        Spacer().frame(height: 8)
+        GenreCarousel(title: "Genres", genres: viewModel.value?.genres)
         CarouselView(title: "Similar TV Shows", items: carouselItems)
       }
-      .padding(.vertical, 8)
+      .padding(.vertical, 16)
     }
     .navigationTitle(viewModel.value?.name ?? title)
     .refreshable { await viewModel.load(id: id) }
@@ -38,7 +38,9 @@ struct TVShowDetailsView: View {
 }
 
 #Preview {
+  @Previewable @State var configuration = Configuration()
   NavigationStack {
     TVShowDetailsView(id: 94605, title: "Arcane")
   }
+  .environment(configuration)
 }
