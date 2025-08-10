@@ -16,7 +16,7 @@ struct GenreCarousel: View {
   let title: LocalizedStringKey
   let genres: [Genre]?
 
-  private var rederedGenres: [Genre] {
+  private var renderedGenres: [Genre] {
     guard let genres, !genres.isEmpty else {
       return placeholder
     }
@@ -26,7 +26,7 @@ struct GenreCarousel: View {
   var body: some View {
     ScrollView(.horizontal) {
       HStack(alignment: .firstTextBaseline) {
-        ForEach(rederedGenres) { genre in
+        ForEach(renderedGenres) { genre in
           NavigationLink(value: genre.id) {
             Text(genre.name)
               .font(.body)
