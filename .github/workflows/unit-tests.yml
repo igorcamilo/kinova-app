@@ -18,7 +18,7 @@ jobs:
         - name: macOS
           destination: platform=macOS,arch=arm64
         - name: visionOS
-          destination: platform=visionOS Simulator,arch=arm64,OS=2.5,name=Apple Vision Pro 4K
+          destination: platform=visionOS Simulator,arch=arm64,OS=2.5,name=Apple Vision Pro
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
