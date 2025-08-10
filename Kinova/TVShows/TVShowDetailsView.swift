@@ -14,8 +14,12 @@ struct TVShowDetailsView: View {
 
   @State private var viewModel = TVShowDetailsViewModel()
 
-  private var carouselItems: [TVShow] {
-    viewModel.value?.similar?.results ?? []
+  private var genres: [Genre]? {
+    viewModel.value?.genres
+  }
+
+  private var similar: [TVShow]? {
+    viewModel.value?.similar?.results
   }
 
   var body: some View {
@@ -26,11 +30,12 @@ struct TVShowDetailsView: View {
             .font(.body)
             .horizontalMargin()
         }
-        GenreCarousel(title: "Genres", genres: viewModel.value?.genres)
-        CarouselView(title: "Similar TV Shows", items: carouselItems)
+        TextCarousel(title: "Genres", items: genres)
+        ImageCarousel(title: "Similar TV Shows", items: similar)
       }
       .padding(.vertical, 16)
     }
+    .containerGeometry()
     .navigationTitle(viewModel.value?.name ?? title)
     .refreshable { await viewModel.load(id: id) }
     .onAppear { Task { await viewModel.load(id: id) } }

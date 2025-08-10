@@ -7,13 +7,12 @@
 
 import SwiftUI
 import TMDB
-import os
 
 struct BackdropView: View {
   let path: BackdropPath?
 
   @Environment(Configuration.self) private var configuration
-  @Environment(Dimensions.self) private var dimensions
+  @Environment(ContainerGeometry.self) private var containerGeometry
   @Environment(\.displayScale) private var displayScale
 
   private var images: Images? {
@@ -28,7 +27,7 @@ struct BackdropView: View {
       return nil
     }
     let size = images.size(
-      width: dimensions.size.width * displayScale,
+      width: containerGeometry.size.width * displayScale,
       from: \.backdropSizes
     )
     guard let size else {
@@ -46,6 +45,10 @@ struct BackdropView: View {
     } placeholder: {
       Color.secondary
     }
-    .onAppear { Task { await configuration.loadIfNeeded() } }
+    .onAppear {
+      Task {
+        await configuration.loadIfNeeded()
+      }
+    }
   }
 }

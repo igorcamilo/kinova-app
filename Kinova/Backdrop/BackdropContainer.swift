@@ -12,7 +12,7 @@ struct BackdropContainer<Contents: View>: View {
   let path: BackdropPath?
   let contents: Contents
 
-  @State private var dimensions = Dimensions()
+  @Environment(ContainerGeometry.self) private var containerGeometry
 
   init(
     path: BackdropPath?,
@@ -23,25 +23,15 @@ struct BackdropContainer<Contents: View>: View {
   }
 
   var body: some View {
-    ScrollView(.vertical) { scrollContents }
-      .onGeometryChange(for: CGSize.self, of: \.size) {
-        dimensions.size = $1
+    ScrollView(.vertical) {
+      LazyVStack(spacing: 0) {
+        BackdropView(path: path)
+          .aspectRatio(16 / 9, contentMode: .fill)
+          .frame(maxHeight: containerGeometry.size.height / 2)
+          .clipped()
+          .backgroundEffect()
+        contents
       }
-      .environment(dimensions)
-  }
-
-  private var backdropView: some View {
-    BackdropView(path: path)
-      .aspectRatio(16 / 9, contentMode: .fill)
-      .frame(maxHeight: dimensions.size.height / 2)
-      .clipped()
-      .backgroundEffect()
-  }
-
-  private var scrollContents: some View {
-    LazyVStack(spacing: 0) {
-      backdropView
-      contents
     }
   }
 }
