@@ -17,7 +17,7 @@ extension Movie: ImageCarouselItem {
   }
 
   static func placeholders(count: Int) -> [Movie] {
-    (1...count).map {
+    (0..<count).map {
       Movie(
         adult: false,
         backdropPath: nil,

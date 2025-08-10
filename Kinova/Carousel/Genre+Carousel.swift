@@ -12,12 +12,10 @@ extension Genre: TextCarouselItem {
     .genre(id: id, title: name)
   }
 
-  var image: CarouselImage? { nil }
-
   var title: String { name }
 
   static func placeholders(count: Int) -> [Genre] {
-    (1...count).map {
+    (0..<count).map {
       Genre(id: ID(rawValue: $0), name: "Genre \($0)")
     }
   }

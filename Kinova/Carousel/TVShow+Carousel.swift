@@ -19,7 +19,7 @@ extension TVShow: ImageCarouselItem {
   var title: String { name }
 
   static func placeholders(count: Int) -> [TVShow] {
-    (0...count).map {
+    (0..<count).map {
       TVShow(
         adult: false,
         backdropPath: nil,
