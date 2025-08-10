@@ -8,7 +8,7 @@
 import SwiftUI
 import TMDB
 
-fileprivate let placeholder = (1...10).map {
+private let placeholder = (1...10).map {
   Genre(id: Genre.ID(rawValue: $0), name: "Genre \($0)")
 }
 
