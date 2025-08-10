@@ -48,7 +48,7 @@ private struct ContainerGeometryModifier: ViewModifier {
       }
   }
 
-  private struct Values: nonisolated Equatable {
+  private struct Values: Equatable {
     var safeAreaInsets: EdgeInsets
     var size: CGSize
   }

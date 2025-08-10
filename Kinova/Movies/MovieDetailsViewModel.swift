@@ -15,7 +15,7 @@ private let logger = Logger(
   category: #fileID
 )
 
-@Observable final class MovieDetailsViewModel {
+@MainActor @Observable final class MovieDetailsViewModel {
   let client: TMDBClient
 
   private(set) var isLoading = false
