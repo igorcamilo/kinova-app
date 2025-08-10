@@ -26,12 +26,7 @@ struct ImageCarousel<Item: ImageCarouselItem>: View {
   var body: some View {
     ScrollView(.horizontal) {
       HStack(alignment: .firstTextBaseline) {
-        ForEach(renderedItems) { item in
-          NavigationLink(value: item.destination) {
-            ItemView(image: item.image)
-          }
-        }
-        .hidden(if: items?.isEmpty == true)
+        contents
       }
       .horizontalMargin()
     }
@@ -40,6 +35,15 @@ struct ImageCarousel<Item: ImageCarouselItem>: View {
     .redacted(reason: items == nil ? [.placeholder] : [])
     .disabled(items?.isEmpty != false)
     .sectionTitle(title)
+  }
+
+  private var contents: some View {
+    ForEach(renderedItems) { item in
+      NavigationLink(value: item.destination) {
+        ItemView(image: item.image)
+      }
+    }
+    .hidden(if: items?.isEmpty == true)
   }
 
   private struct ItemView: View {

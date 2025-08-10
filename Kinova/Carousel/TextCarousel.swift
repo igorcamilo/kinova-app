@@ -26,13 +26,7 @@ struct TextCarousel<Item: TextCarouselItem>: View {
   var body: some View {
     ScrollView(.horizontal) {
       HStack(alignment: .firstTextBaseline) {
-        ForEach(renderedItems) { item in
-          NavigationLink(value: item.destination) {
-            Text(item.title)
-              .font(.body)
-          }
-        }
-        .hidden(if: items?.isEmpty == true)
+        contents
       }
       .horizontalMargin()
     }
@@ -41,6 +35,16 @@ struct TextCarousel<Item: TextCarouselItem>: View {
     .redacted(reason: items == nil ? [.placeholder] : [])
     .disabled(items?.isEmpty != false)
     .sectionTitle(title)
+  }
+
+  private var contents: some View {
+    ForEach(renderedItems) { item in
+      NavigationLink(value: item.destination) {
+        Text(item.title)
+          .font(.body)
+      }
+    }
+    .hidden(if: items?.isEmpty == true)
   }
 }
 
