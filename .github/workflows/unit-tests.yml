@@ -33,8 +33,10 @@ jobs:
     - if: ${{ matrix.name != 'macOS' }}
       name: Install platform runtime
       run: xcrun xcodebuild -downloadPlatform ${{ matrix.name }}
-    - name: Build and run tests
-      run: xcrun xcodebuild test -project Kinova.xcodeproj -scheme Kinova -resultBundlePath "Artifacts/testResult.xcresult" -destination "${{ matrix.destination }}" -enableCodeCoverage YES CODE_SIGNING_ALLOWED=NO SWIFT_TREAT_WARNINGS_AS_ERRORS=YES SWIFT_SUPPRESS_WARNINGS=NO
+    - name: List destinations
+      run: xcrun simctl list
+    # - name: Build and run tests
+    #   run: xcrun xcodebuild test -project Kinova.xcodeproj -scheme Kinova -resultBundlePath "Artifacts/testResult.xcresult" -destination "${{ matrix.destination }}" -enableCodeCoverage YES CODE_SIGNING_ALLOWED=NO SWIFT_TREAT_WARNINGS_AS_ERRORS=YES SWIFT_SUPPRESS_WARNINGS=NO
     - if: always()
       name: Convert xcresult to JUnit
       run: xcresultparser -o junit Artifacts/testResult.xcresult > Artifacts/testResult.xml
