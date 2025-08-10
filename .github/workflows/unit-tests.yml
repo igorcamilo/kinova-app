@@ -8,17 +8,17 @@ permissions:
   contents: read
 jobs:
   xcode-tests:
-    name: Xcode 16.4 (${{ matrix.name }})
+    name: Xcode 26.0 (${{ matrix.name }})
     runs-on: macos-15
     strategy:
       matrix:
         include:
         - name: iOS
-          destination: platform=iOS Simulator,arch=arm64,OS=18.5,name=iPhone 16
+          destination: platform=iOS Simulator,arch=arm64,OS=26.0,name=iPhone 16
         - name: macOS
           destination: platform=macOS,arch=arm64
         - name: visionOS
-          destination: platform=visionOS Simulator,arch=arm64,OS=2.5,name=Apple Vision Pro
+          destination: platform=visionOS Simulator,arch=arm64,OS=26.0,name=Apple Vision Pro 4K
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
@@ -29,7 +29,10 @@ jobs:
         TMDB_ACCESS_TOKEN: ${{ secrets.TMDB_ACCESS_TOKEN }}
       run: ./Scripts/CreateSecretsFile.sh
     - name: Select Xcode version
-      run: sudo xcode-select -s /Applications/Xcode_16.4.app
+      run: sudo xcode-select -s /Applications/Xcode_26.0.app
+    - if: ${{ matrix.name != 'macOS' }}
+      name: Install platform runtime
+      run: xcrun xcodebuild -downloadPlatform ${{ matrix.name }}
     - name: Build and run tests
       run: xcrun xcodebuild test -project Kinova.xcodeproj -scheme Kinova -resultBundlePath "Artifacts/testResult.xcresult" -destination "${{ matrix.destination }}" -enableCodeCoverage YES CODE_SIGNING_ALLOWED=NO SWIFT_TREAT_WARNINGS_AS_ERRORS=YES SWIFT_SUPPRESS_WARNINGS=NO
     - if: always()
