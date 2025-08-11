@@ -16,7 +16,10 @@ extension Genre: TextCarouselItem {
 
   static func placeholders(count: Int) -> [Genre] {
     (0..<count).map {
-      Genre(id: ID(rawValue: $0), name: "Genre \($0)")
+      var genre = Genre()
+      genre.id = ID(rawValue: $0)
+      genre.name = "Genre \($0)"
+      return genre
     }
   }
 }
