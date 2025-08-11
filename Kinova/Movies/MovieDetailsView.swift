@@ -37,13 +37,14 @@ struct MovieDetailsView: View {
     }
     .containerGeometry()
     .navigationTitle(viewModel.value?.title ?? title)
+    .toolbarTitleDisplayMode(.inline)
     .refreshable { await viewModel.load(id: id) }
     .onAppear { Task { await viewModel.load(id: id) } }
   }
 }
 
 #Preview {
-  @Previewable @State var configuration = Configuration()
+  let configuration = Configuration()
   NavigationStack {
     MovieDetailsView(id: 569094, title: "Spider-Man: Across the Spider-Verse")
   }

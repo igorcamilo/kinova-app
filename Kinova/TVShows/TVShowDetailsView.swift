@@ -37,13 +37,14 @@ struct TVShowDetailsView: View {
     }
     .containerGeometry()
     .navigationTitle(viewModel.value?.name ?? title)
+    .toolbarTitleDisplayMode(.inline)
     .refreshable { await viewModel.load(id: id) }
     .onAppear { Task { await viewModel.load(id: id) } }
   }
 }
 
 #Preview {
-  @Previewable @State var configuration = Configuration()
+  let configuration = Configuration()
   NavigationStack {
     TVShowDetailsView(id: 94605, title: "Arcane")
   }

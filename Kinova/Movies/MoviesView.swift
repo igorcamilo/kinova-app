@@ -24,6 +24,7 @@ struct MoviesView: View {
     }
     .containerGeometry()
     .navigationTitle("Movies")
+    .toolbarTitleDisplayMode(.inlineLarge)
     .refreshable { await viewModel.load() }
     .onAppear {
       Task {
@@ -37,7 +38,9 @@ struct MoviesView: View {
 }
 
 #Preview {
+  let configuration = Configuration()
   NavigationStack {
     MoviesView()
   }
+  .environment(configuration)
 }
