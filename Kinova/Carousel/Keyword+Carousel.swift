@@ -11,7 +11,7 @@ extension Keyword: TextCarouselItem {
   var destination: Destination {
     .keyword(id: id, title: name)
   }
-  
+
   var title: String { name }
 
   static func placeholders(count: Int) -> [Keyword] {

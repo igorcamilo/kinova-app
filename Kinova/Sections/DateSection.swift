@@ -48,7 +48,7 @@ struct DateSection: View {
       formatter.locale = Locale(identifier: "en_US_POSIX")
     }
 
-    func convert(string: String, now: Date = Date()) -> Text {
+    func convert(string: String) -> Text {
       guard let date = formatter.date(from: string) else {
         return Text(string)
       }
