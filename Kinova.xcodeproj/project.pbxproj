@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		D1032BF12E2D45A900D3CC5D /* TMDB in Frameworks */ = {isa = PBXBuildFile; productRef = D1032BF02E2D45A800D3CC5D /* TMDB */; };
+		D1F7D1EE2E4B61A9005A90C4 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = D1F7D1ED2E4B61A9005A90C4 /* ComposableArchitecture */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,6 +51,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D1F7D1EE2E4B61A9005A90C4 /* ComposableArchitecture in Frameworks */,
 				D1032BF12E2D45A900D3CC5D /* TMDB in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -119,6 +121,7 @@
 			name = Kinova;
 			packageProductDependencies = (
 				D1032BF02E2D45A800D3CC5D /* TMDB */,
+				D1F7D1ED2E4B61A9005A90C4 /* ComposableArchitecture */,
 			);
 			productName = Kinova;
 			productReference = D14D232F2E22B02B000EBA25 /* Kinova.app */;
@@ -154,6 +157,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				D1032BEF2E2D45A800D3CC5D /* XCRemoteSwiftPackageReference "tmdb-swift" */,
+				D1F7D1EC2E4B61A9005A90C4 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = D14D23302E22B02B000EBA25 /* Products */;
@@ -484,6 +488,14 @@
 				minimumVersion = 0.1.0;
 			};
 		};
+		D1F7D1EC2E4B61A9005A90C4 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.21.1;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -491,6 +503,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = D1032BEF2E2D45A800D3CC5D /* XCRemoteSwiftPackageReference "tmdb-swift" */;
 			productName = TMDB;
+		};
+		D1F7D1ED2E4B61A9005A90C4 /* ComposableArchitecture */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D1F7D1EC2E4B61A9005A90C4 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
+			productName = ComposableArchitecture;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
