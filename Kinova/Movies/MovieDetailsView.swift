@@ -14,6 +14,14 @@ struct MovieDetailsView: View {
 
   @State private var viewModel = MovieDetailsViewModel()
 
+  private var overview: String? {
+    viewModel.value?.overview
+  }
+
+  private var releaseDate: String? {
+    viewModel.value?.releaseDate
+  }
+
   private var genres: [Genre]? {
     viewModel.value?.genres
   }
@@ -22,16 +30,18 @@ struct MovieDetailsView: View {
     viewModel.value?.similar?.results
   }
 
+  private var keywords: [Keyword]? {
+    viewModel.value?.keywords?.keywords
+  }
+
   var body: some View {
     BackdropContainer(path: viewModel.value?.backdropPath) {
       LazyVStack(alignment: .leading, spacing: 16) {
-        if let overview = viewModel.value?.overview {
-          Text(overview)
-            .font(.body)
-            .horizontalMargin()
-        }
+        OverviewSection(value: overview)
+        DateSection(title: "Release Date", value: releaseDate)
         TextCarousel(title: "Genres", items: genres)
         ImageCarousel(title: "Similar Movies", items: similar)
+        TextCarousel(title: "Keywords", items: keywords)
       }
       .padding(.vertical, 16)
     }

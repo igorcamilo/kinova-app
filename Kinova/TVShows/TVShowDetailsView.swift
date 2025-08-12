@@ -14,6 +14,18 @@ struct TVShowDetailsView: View {
 
   @State private var viewModel = TVShowDetailsViewModel()
 
+  private var overview: String? {
+    viewModel.value?.overview
+  }
+
+  private var firstAirDate: String? {
+    viewModel.value?.firstAirDate
+  }
+
+  private var lastAirDate: String? {
+    viewModel.value?.lastAirDate
+  }
+
   private var genres: [Genre]? {
     viewModel.value?.genres
   }
@@ -22,16 +34,19 @@ struct TVShowDetailsView: View {
     viewModel.value?.similar?.results
   }
 
+  private var keywords: [Keyword]? {
+    viewModel.value?.keywords?.results
+  }
+
   var body: some View {
     BackdropContainer(path: viewModel.value?.backdropPath) {
       LazyVStack(alignment: .leading, spacing: 16) {
-        if let overview = viewModel.value?.overview {
-          Text(overview)
-            .font(.body)
-            .horizontalMargin()
-        }
+        OverviewSection(value: overview)
+        DateSection(title: "First Air Date", value: firstAirDate)
+        DateSection(title: "Last Air Date", value: lastAirDate)
         TextCarousel(title: "Genres", items: genres)
         ImageCarousel(title: "Similar TV Shows", items: similar)
+        TextCarousel(title: "Keywords", items: keywords)
       }
       .padding(.vertical, 16)
     }

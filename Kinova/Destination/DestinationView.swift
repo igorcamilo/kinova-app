@@ -16,6 +16,8 @@ struct DestinationView: View {
       switch destination {
       case .genre(_, let title):
         Text("Genre Details").navigationTitle(title)
+      case .keyword(_, let title):
+        Text("Keyword Details").navigationTitle(title)
       case .movie(let id, let title):
         MovieDetailsView(id: id, title: title)
       case .tvShow(let id, let title):
