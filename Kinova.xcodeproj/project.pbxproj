@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		D1032BF12E2D45A900D3CC5D /* TMDB in Frameworks */ = {isa = PBXBuildFile; productRef = D1032BF02E2D45A800D3CC5D /* TMDB */; };
+		D117EBAD2E4D226200CA488E /* MoviesFeature in Frameworks */ = {isa = PBXBuildFile; productRef = D117EBAC2E4D226200CA488E /* MoviesFeature */; };
+		D1F7D1EE2E4B61A9005A90C4 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = D1F7D1ED2E4B61A9005A90C4 /* ComposableArchitecture */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -23,6 +25,7 @@
 /* Begin PBXFileReference section */
 		D1032BE32E2D2F5400D3CC5D /* KinovaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KinovaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D14D232F2E22B02B000EBA25 /* Kinova.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Kinova.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D153C2652E4D211B00C05EAD /* KinovaCore */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = KinovaCore; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -50,6 +53,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D117EBAD2E4D226200CA488E /* MoviesFeature in Frameworks */,
+				D1F7D1EE2E4B61A9005A90C4 /* ComposableArchitecture in Frameworks */,
 				D1032BF12E2D45A900D3CC5D /* TMDB in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -57,11 +62,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D117EBAB2E4D226200CA488E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		D14D23262E22B02B000EBA25 = {
 			isa = PBXGroup;
 			children = (
 				D14D23312E22B02B000EBA25 /* Kinova */,
 				D1032BE42E2D2F5400D3CC5D /* KinovaTests */,
+				D153C2652E4D211B00C05EAD /* KinovaCore */,
+				D117EBAB2E4D226200CA488E /* Frameworks */,
 				D14D23302E22B02B000EBA25 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -119,6 +133,8 @@
 			name = Kinova;
 			packageProductDependencies = (
 				D1032BF02E2D45A800D3CC5D /* TMDB */,
+				D1F7D1ED2E4B61A9005A90C4 /* ComposableArchitecture */,
+				D117EBAC2E4D226200CA488E /* MoviesFeature */,
 			);
 			productName = Kinova;
 			productReference = D14D232F2E22B02B000EBA25 /* Kinova.app */;
@@ -154,6 +170,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				D1032BEF2E2D45A800D3CC5D /* XCRemoteSwiftPackageReference "tmdb-swift" */,
+				D1F7D1EC2E4B61A9005A90C4 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = D14D23302E22B02B000EBA25 /* Products */;
@@ -480,8 +497,16 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/igorcamilo/tmdb-swift.git";
 			requirement = {
+				branch = tca;
+				kind = branch;
+			};
+		};
+		D1F7D1EC2E4B61A9005A90C4 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture.git";
+			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 0.1.0;
+				minimumVersion = 1.21.1;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -491,6 +516,15 @@
 			isa = XCSwiftPackageProductDependency;
 			package = D1032BEF2E2D45A800D3CC5D /* XCRemoteSwiftPackageReference "tmdb-swift" */;
 			productName = TMDB;
+		};
+		D117EBAC2E4D226200CA488E /* MoviesFeature */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = MoviesFeature;
+		};
+		D1F7D1ED2E4B61A9005A90C4 /* ComposableArchitecture */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D1F7D1EC2E4B61A9005A90C4 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
+			productName = ComposableArchitecture;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
