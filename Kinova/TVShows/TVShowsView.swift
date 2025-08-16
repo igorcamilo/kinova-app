@@ -24,6 +24,7 @@ struct TVShowsView: View {
     }
     .containerGeometry()
     .navigationTitle("TV Shows")
+    .toolbarTitleDisplayMode(.inlineLarge)
     .refreshable { await viewModel.load() }
     .onAppear {
       Task {
@@ -37,7 +38,9 @@ struct TVShowsView: View {
 }
 
 #Preview {
+  let configuration = Configuration()
   NavigationStack {
     TVShowsView()
   }
+  .environment(configuration)
 }

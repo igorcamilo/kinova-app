@@ -15,14 +15,10 @@ struct RootView: View {
   var body: some View {
     TabView(selection: $viewModel.selectedTab) {
       Tab("Movies", systemImage: "film", value: .movies) {
-        NavigationStack(path: $viewModel.moviesPath) {
-          MoviesView().destination()
-        }
+        moviesView
       }
       Tab("TV Shows", systemImage: "tv", value: .tvShows) {
-        NavigationStack(path: $viewModel.tvShowsPath) {
-          TVShowsView().destination()
-        }
+        tvShowsView
       }
     }
     .tabViewStyle(.sidebarAdaptable)
@@ -38,8 +34,21 @@ struct RootView: View {
       }
     }
   }
+
+  private var moviesView: some View {
+    NavigationStack(path: $viewModel.moviesPath) {
+      MoviesView().destination()
+    }
+  }
+
+  private var tvShowsView: some View {
+    NavigationStack(path: $viewModel.tvShowsPath) {
+      TVShowsView().destination()
+    }
+  }
 }
 
 #Preview {
-  RootView()
+  let configuration = Configuration()
+  RootView().environment(configuration)
 }
