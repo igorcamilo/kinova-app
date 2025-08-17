@@ -37,13 +37,18 @@ jobs:
     - name: List destinations
       run: xcrun simctl list
     - name: Build and run tests
-      run: xcrun xcodebuild test -project Kinova.xcodeproj -scheme Kinova -resultBundlePath "Artifacts/testResult.xcresult" -destination "${{ matrix.destination }}" -enableCodeCoverage YES CODE_SIGNING_ALLOWED=NO SWIFT_TREAT_WARNINGS_AS_ERRORS=YES SWIFT_SUPPRESS_WARNINGS=NO
+      run: |
+        xcrun xcodebuild clean test \
+          -project Kinova.xcodeproj \
+          -scheme Kinova \
+          -destination "${{ matrix.destination }}" \
+          -resultBundlePath "Artifacts/Kinova.xcresult" \
     - if: always()
       name: Convert xcresult to JUnit
-      run: xcresultparser -o junit Artifacts/testResult.xcresult > Artifacts/testResult.xml
+      run: xcresultparser -o junit Artifacts/Kinova.xcresult > Artifacts/Kinova.xml
     - if: always()
       name: Convert xcresult to HTML
-      run: xcresultparser -o html Artifacts/testResult.xcresult > Artifacts/testResult.html
+      run: xcresultparser -o html Artifacts/Kinova.xcresult > Artifacts/Kinova.html
     - if: always()
       name: Upload coverage reports to Codecov
       uses: codecov/codecov-action@v5

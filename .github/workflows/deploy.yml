@@ -15,11 +15,11 @@ jobs:
       matrix:
         include:
         - name: iOS
-          destination: platform=iOS
+          destination: generic/platform=iOS
         - name: macOS
-          destination: platform=macOS
+          destination: generic/platform=macOS
         - name: visionOS
-          destination: platform=visionOS
+          destination: generic/platform=visionOS
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
@@ -35,7 +35,13 @@ jobs:
     - name: List destinations
       run: xcrun simctl list
     - name: Build and archive
-      run: xcrun xcodebuild clean archive -project Kinova.xcodeproj -scheme Kinova -resultBundlePath "Artifacts/testResult.xcresult" -destination "${{ matrix.destination }}"
+      run: |
+        xcrun xcodebuild clean archive \
+          -project Kinova.xcodeproj \
+          -scheme Kinova \
+          -destination "${{ matrix.destination }}" \
+          -archivePath "Artifacts/Kinova.xcarchive" \
+          -resultBundlePath "Artifacts/Kinova.xcresult" \
     - if: always()
       name: Upload artifacts
       uses: actions/upload-artifact@v4
