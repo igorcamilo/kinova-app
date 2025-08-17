@@ -36,7 +36,7 @@ jobs:
       run: sudo xcode-select -s /Applications/Xcode_26.0.app
     - if: matrix.language == 'swift'
       name: Build with Swift
-      run: xcrun xcodebuild -project Kinova.xcodeproj -scheme Kinova CODE_SIGNING_ALLOWED=NO
+      run: xcrun xcodebuild clean build -project Kinova.xcodeproj -scheme Kinova
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v3
       with:

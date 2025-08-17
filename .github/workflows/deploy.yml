@@ -33,8 +33,8 @@ jobs:
       run: xcrun xcodebuild -downloadPlatform ${{ matrix.name }}
     - name: List destinations
       run: xcrun simctl list
-    - name: Build and run tests
-      run: xcrun xcodebuild test -project Kinova.xcodeproj -scheme Kinova -resultBundlePath "Artifacts/testResult.xcresult" -destination "${{ matrix.destination }}"
+    - name: Build and archive
+      run: xcrun xcodebuild clean archive -project Kinova.xcodeproj -scheme Kinova -resultBundlePath "Artifacts/testResult.xcresult" -destination "${{ matrix.destination }}"
     - if: always()
       name: Upload artifacts
       uses: actions/upload-artifact@v4
