@@ -39,7 +39,7 @@ jobs:
           -destination "${{ matrix.destination }}" \
           -resultBundlePath "Artifacts/Kinova.xcresult" \
           -enableCodeCoverage YES \
-          CODE_SIGNING_ALLOWED=NO \
+          CODE_SIGNING_ALLOWED=NO
     - name: Convert xcresult to JUnit
       run: xcresultparser -o junit Artifacts/Kinova.xcresult > Artifacts/Kinova.xml
     - name: Convert xcresult to HTML

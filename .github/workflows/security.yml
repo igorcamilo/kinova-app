@@ -39,7 +39,7 @@ jobs:
         xcrun xcodebuild clean build \
           -project Kinova.xcodeproj \
           -scheme Kinova \
-          CODE_SIGNING_ALLOWED=NO \
+          CODE_SIGNING_ALLOWED=NO
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v3
       with:
