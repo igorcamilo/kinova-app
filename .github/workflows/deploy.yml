@@ -11,14 +11,15 @@ jobs:
     name: Xcode 26.0 (${{ matrix.name }})
     runs-on: macos-15
     strategy:
+      fail-fast: false
       matrix:
         include:
         - name: iOS
-          destination: platform=iOS,name=Any iOS Device
+          destination: platform=iOS
         - name: macOS
-          destination: platform=macOS,name=Any Mac
+          destination: platform=macOS
         - name: visionOS
-          destination: platform=visionOS,name=Any VisionOS Device
+          destination: platform=visionOS
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4

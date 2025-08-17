@@ -11,6 +11,7 @@ jobs:
     name: Xcode 26.0 (${{ matrix.name }})
     runs-on: macos-15
     strategy:
+      fail-fast: false
       matrix:
         include:
         - name: iOS
