@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 77;
+	objectVersion = 90;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -46,18 +46,14 @@
 /* Begin PBXFrameworksBuildPhase section */
 		D1032BE02E2D2F5400D3CC5D /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		D14D232C2E22B02B000EBA25 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 				D1032BF12E2D45A900D3CC5D /* TMDB in Frameworks */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
@@ -101,8 +97,6 @@
 				D1032BE42E2D2F5400D3CC5D /* KinovaTests */,
 			);
 			name = KinovaTests;
-			packageProductDependencies = (
-			);
 			productName = KinovaTests;
 			productReference = D1032BE32E2D2F5400D3CC5D /* KinovaTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -116,8 +110,6 @@
 				D14D232D2E22B02B000EBA25 /* Resources */,
 			);
 			buildRules = (
-			);
-			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
 				D14069632E5274B800827C92 /* ci_scripts */,
@@ -140,6 +132,7 @@
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1640;
 				LastUpgradeCheck = 1640;
+				ORGANIZATIONNAME = "Igor Camilo";
 				TargetAttributes = {
 					D1032BE22E2D2F5400D3CC5D = {
 						CreatedOnToolsVersion = 16.4;
@@ -162,7 +155,7 @@
 			packageReferences = (
 				D1032BEF2E2D45A800D3CC5D /* XCRemoteSwiftPackageReference "tmdb-swift" */,
 			);
-			preferredProjectObjectVersion = 77;
+			preferredProjectObjectVersion = 90;
 			productRefGroup = D14D23302E22B02B000EBA25 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -176,34 +169,26 @@
 /* Begin PBXResourcesBuildPhase section */
 		D1032BE12E2D2F5400D3CC5D /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		D14D232D2E22B02B000EBA25 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		D1032BDF2E2D2F5400D3CC5D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		D14D232B2E22B02B000EBA25 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
 			files = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
@@ -216,7 +201,7 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		D1032BEA2E2D2F5400D3CC5D /* Debug */ = {
+		D1032BEA2E2D2F5400D3CC5D /* Debug configuration for PBXNativeTarget "KinovaTests" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -237,7 +222,7 @@
 			};
 			name = Debug;
 		};
-		D1032BEB2E2D2F5400D3CC5D /* Release */ = {
+		D1032BEB2E2D2F5400D3CC5D /* Release configuration for PBXNativeTarget "KinovaTests" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -258,7 +243,7 @@
 			};
 			name = Release;
 		};
-		D14D23392E22B02C000EBA25 /* Debug */ = {
+		D14D23392E22B02C000EBA25 /* Debug configuration for PBXProject "Kinova" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -321,7 +306,7 @@
 			};
 			name = Debug;
 		};
-		D14D233A2E22B02C000EBA25 /* Release */ = {
+		D14D233A2E22B02C000EBA25 /* Release configuration for PBXProject "Kinova" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -376,7 +361,7 @@
 			};
 			name = Release;
 		};
-		D14D233C2E22B02C000EBA25 /* Debug */ = {
+		D14D233C2E22B02C000EBA25 /* Debug configuration for PBXNativeTarget "Kinova" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -387,6 +372,8 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.entertainment";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -413,7 +400,7 @@
 			};
 			name = Debug;
 		};
-		D14D233D2E22B02C000EBA25 /* Release */ = {
+		D14D233D2E22B02C000EBA25 /* Release configuration for PBXNativeTarget "Kinova" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -424,6 +411,8 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.entertainment";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -456,28 +445,25 @@
 		D1032BE92E2D2F5400D3CC5D /* Build configuration list for PBXNativeTarget "KinovaTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				D1032BEA2E2D2F5400D3CC5D /* Debug */,
-				D1032BEB2E2D2F5400D3CC5D /* Release */,
+				D1032BEA2E2D2F5400D3CC5D /* Debug configuration for PBXNativeTarget "KinovaTests" */,
+				D1032BEB2E2D2F5400D3CC5D /* Release configuration for PBXNativeTarget "KinovaTests" */,
 			);
-			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 		D14D232A2E22B02B000EBA25 /* Build configuration list for PBXProject "Kinova" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				D14D23392E22B02C000EBA25 /* Debug */,
-				D14D233A2E22B02C000EBA25 /* Release */,
+				D14D23392E22B02C000EBA25 /* Debug configuration for PBXProject "Kinova" */,
+				D14D233A2E22B02C000EBA25 /* Release configuration for PBXProject "Kinova" */,
 			);
-			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 		D14D233B2E22B02C000EBA25 /* Build configuration list for PBXNativeTarget "Kinova" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				D14D233C2E22B02C000EBA25 /* Debug */,
-				D14D233D2E22B02C000EBA25 /* Release */,
+				D14D233C2E22B02C000EBA25 /* Debug configuration for PBXNativeTarget "Kinova" */,
+				D14D233D2E22B02C000EBA25 /* Release configuration for PBXNativeTarget "Kinova" */,
 			);
-			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
