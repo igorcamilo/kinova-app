@@ -35,7 +35,7 @@ Kinova is a cross-platform SwiftUI app for browsing movies and TV shows, powered
 	- Run the provided script to generate the secrets file:
 	  ```sh
 	  export TMDB_ACCESS_TOKEN=your_token_here
-	  ./Scripts/CreateSecretsFile.sh
+	  ./ci_scripts/ci_post_clone.sh
 	  ```
 
 3. **Open in Xcode:**

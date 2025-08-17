@@ -21,22 +21,25 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
+    - name: Run post-clone script
+      env:
+        TMDB_ACCESS_TOKEN: ${{ secrets.TMDB_ACCESS_TOKEN }}
+      run: ./ci_scripts/ci_post_clone.sh
     - name: Initialize CodeQL
       uses: github/codeql-action/init@v3
       with:
         languages: ${{ matrix.language }}
         build-mode: ${{ matrix.build-mode }}
     - if: matrix.language == 'swift'
-      name: Create secrets file
-      env:
-        TMDB_ACCESS_TOKEN: ${{ secrets.TMDB_ACCESS_TOKEN }}
-      run: ./Scripts/CreateSecretsFile.sh
-    - if: matrix.language == 'swift'
       name: Select Xcode version
-      run: sudo xcode-select -s /Applications/Xcode_16.4.app
+      run: sudo xcode-select -s /Applications/Xcode_26.0.app
     - if: matrix.language == 'swift'
-      name: Build with Swift
-      run: xcrun xcodebuild -project Kinova.xcodeproj -scheme Kinova CODE_SIGNING_ALLOWED=NO
+      name: Build with Xcode
+      run: |
+        xcrun xcodebuild clean build \
+          -project Kinova.xcodeproj \
+          -scheme Kinova \
+          CODE_SIGNING_ALLOWED=NO
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v3
       with:
