@@ -31,6 +31,11 @@
 			path = KinovaTests;
 			sourceTree = "<group>";
 		};
+		D14069632E5274B800827C92 /* ci_scripts */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = ci_scripts;
+			sourceTree = "<group>";
+		};
 		D14D23312E22B02B000EBA25 /* Kinova */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = Kinova;
@@ -60,6 +65,7 @@
 		D14D23262E22B02B000EBA25 = {
 			isa = PBXGroup;
 			children = (
+				D14069632E5274B800827C92 /* ci_scripts */,
 				D14D23312E22B02B000EBA25 /* Kinova */,
 				D1032BE42E2D2F5400D3CC5D /* KinovaTests */,
 				D14D23302E22B02B000EBA25 /* Products */,
@@ -114,6 +120,7 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
+				D14069632E5274B800827C92 /* ci_scripts */,
 				D14D23312E22B02B000EBA25 /* Kinova */,
 			);
 			name = Kinova;

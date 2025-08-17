@@ -13,10 +13,10 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
-    - name: Create secrets file
+    - name: Run post-clone script
       env:
         TMDB_ACCESS_TOKEN: ${{ secrets.TMDB_ACCESS_TOKEN }}
-      run: ./Scripts/CreateSecretsFile.sh
+      run: ./ci_scripts/ci_post_clone.sh
     - name: Install Swift and run linter
       run: |
         sudo apt-get -y install libcurl4-openssl-dev
