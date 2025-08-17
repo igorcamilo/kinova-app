@@ -1,0 +1,43 @@
+name: "Deploy"
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+permissions:
+  contents: read
+jobs:
+  archive-and-upload:
+    name: Xcode 26.0 (${{ matrix.name }})
+    runs-on: macos-15
+    strategy:
+      matrix:
+        include:
+        - name: iOS
+          destination: platform=iOS,name=Any iOS Device
+        - name: macOS
+          destination: platform=macOS,name=Any Mac
+        - name: visionOS
+          destination: platform=visionOS,name=Any VisionOS Device
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    - name: Create secrets file
+      env:
+        TMDB_ACCESS_TOKEN: ${{ secrets.TMDB_ACCESS_TOKEN }}
+      run: ./Scripts/CreateSecretsFile.sh
+    - name: Select Xcode version
+      run: sudo xcode-select -s /Applications/Xcode_26.0.app
+    - if: ${{ matrix.name != 'macOS' }}
+      name: Install platform runtime
+      run: xcrun xcodebuild -downloadPlatform ${{ matrix.name }}
+    - name: List destinations
+      run: xcrun simctl list
+    - name: Build and run tests
+      run: xcrun xcodebuild test -project Kinova.xcodeproj -scheme Kinova -resultBundlePath "Artifacts/testResult.xcresult" -destination "${{ matrix.destination }}"
+    - if: always()
+      name: Upload artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: Artifacts (${{ matrix.name }})
+        path: Artifacts
