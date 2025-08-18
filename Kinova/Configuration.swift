@@ -14,7 +14,7 @@ private let logger = Logger(
   category: #fileID
 )
 
-@MainActor @Observable class Configuration {
+@Observable class Configuration {
   let client: TMDBClient
 
   private(set) var isLoading = false

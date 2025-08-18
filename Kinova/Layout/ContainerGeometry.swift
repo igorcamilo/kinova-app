@@ -8,7 +8,7 @@
 import Observation
 import SwiftUI
 
-@MainActor @Observable class ContainerGeometry {
+@Observable class ContainerGeometry {
   var safeAreaInsets = EdgeInsets()
   var size = CGSize()
 }
