@@ -37,13 +37,17 @@ struct RootView: View {
 
   private var moviesView: some View {
     NavigationStack(path: $viewModel.moviesPath) {
-      MoviesView().destination()
+      Text("Movies View")
+        .navigationTitle("Movies")
+        .toolbarTitleDisplayMode(.inlineLarge)
     }
   }
 
   private var tvShowsView: some View {
     NavigationStack(path: $viewModel.tvShowsPath) {
-      TVShowsView().destination()
+      Text("TV Shows View")
+        .navigationTitle("TV Shows")
+        .toolbarTitleDisplayMode(.inlineLarge)
     }
   }
 }
