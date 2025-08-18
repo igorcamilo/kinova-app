@@ -12,32 +12,77 @@ struct RootView: View {
   @SceneStorage("state") private var state: Data?
   @State private var viewModel = RootViewModel()
 
+  #if os(iOS)
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
+    var hasSearchTab: Bool { horizontalSizeClass == .compact }
+  #elseif os(tvOS)
+    var hasSearchTab: Bool { true }
+  #else
+    var hasSearchTab: Bool { false }
+  #endif
+
   var body: some View {
+    searchableTabView
+      .onAppear {
+        viewModel.restoreData(from: state)
+      }
+      .onChange(of: scenePhase) {
+        if scenePhase == .inactive {
+          state = viewModel.restorationData()
+        }
+      }
+  }
+
+  @ViewBuilder private var searchableTabView: some View {
+    if hasSearchTab {
+      tabView
+    } else {
+      tabView.searchable(text: $viewModel.searchText)
+    }
+  }
+
+  private var tabView: some View {
     TabView(selection: $viewModel.selectedTab) {
+      Tab("Home", systemImage: "play.house", value: .home) {
+        homeView
+      }
+      Tab("Lists", systemImage: "list.bullet.rectangle", value: .lists) {
+        listsView
+      }
       Tab("Movies", systemImage: "film", value: .movies) {
         moviesView
       }
       Tab("TV Shows", systemImage: "tv", value: .tvShows) {
         tvShowsView
       }
+      if hasSearchTab {
+        Tab(value: .search, role: .search) {
+          searchView.searchable(text: $viewModel.searchText)
+        }
+      }
     }
     .tabViewStyle(.sidebarAdaptable)
-    .onAppear { viewModel.restoreData(from: state) }
-    .onChange(of: scenePhase) {
-      switch $1 {
-      case .inactive:
-        state = viewModel.restorationData()
-      case .active, .background:
-        break
-      @unknown default:
-        break
-      }
+  }
+
+  private var homeView: some View {
+    NavigationStack(path: $viewModel.homePath) {
+      Button("Home View") {}
+        .navigationTitle("Home")
+        .toolbarTitleDisplayMode(.inlineLarge)
+    }
+  }
+
+  private var listsView: some View {
+    NavigationStack(path: $viewModel.listsPath) {
+      Button("Lists View") {}
+        .navigationTitle("Lists")
+        .toolbarTitleDisplayMode(.inlineLarge)
     }
   }
 
   private var moviesView: some View {
     NavigationStack(path: $viewModel.moviesPath) {
-      Text("Movies View")
+      Button("Movies View") {}
         .navigationTitle("Movies")
         .toolbarTitleDisplayMode(.inlineLarge)
     }
@@ -45,14 +90,21 @@ struct RootView: View {
 
   private var tvShowsView: some View {
     NavigationStack(path: $viewModel.tvShowsPath) {
-      Text("TV Shows View")
+      Button("TV Shows View") {}
         .navigationTitle("TV Shows")
+        .toolbarTitleDisplayMode(.inlineLarge)
+    }
+  }
+
+  private var searchView: some View {
+    NavigationStack(path: $viewModel.searchPath) {
+      Button("Search View") {}
+        .navigationTitle("Search")
         .toolbarTitleDisplayMode(.inlineLarge)
     }
   }
 }
 
 #Preview {
-  let configuration = Configuration()
-  RootView().environment(configuration)
+  RootView()
 }

@@ -19,37 +19,34 @@ private let logger = Logger(
 )
 
 @Observable final class RootViewModel {
-  let client: TMDBClient
-
+  var homePath: [Destination] = []
+  var listsPath: [Destination] = []
   var moviesPath: [Destination] = []
   var tvShowsPath: [Destination] = []
-  var selectedTab = Tab.movies
-
-  init(client: TMDBClient = .shared) {
-    self.client = client
-  }
+  var searchPath: [Destination] = []
+  var selectedTab = Tab.home
+  var searchText = ""
 
   enum Tab: String, Codable, Hashable, Sendable {
+    case home
+    case lists
     case movies
     case tvShows
+    case search
   }
 
   func restorationData() -> Data? {
     let value = RestorationData(
+      homePath: homePath,
+      listsPath: listsPath,
       moviesPath: moviesPath,
       tvShowsPath: tvShowsPath,
+      searchPath: searchPath,
       selectedTab: selectedTab
     )
+    logger.info("\(#function) creating restoration data: \(String(describing: value))")
     do {
-      #if DEBUG
-        encoder.outputFormatting = .prettyPrinted
-      #endif
-      let data = try encoder.encode(value)
-      #if DEBUG
-        let string = String(data: data, encoding: .utf8) ?? "nil"
-        logger.debug("\(#function) returned: \(string)")
-      #endif
-      return data
+      return try encoder.encode(value)
     } catch {
       logger.error("\(#function) error: \(error)")
       return nil
@@ -63,11 +60,21 @@ private let logger = Logger(
     }
     do {
       let value = try decoder.decode(RestorationData.self, from: data)
+      logger.info("\(#function) restoring from data: \(String(describing: value))")
+      if let homePath = value.homePath {
+        self.homePath = homePath
+      }
+      if let listsPath = value.listsPath {
+        self.listsPath = listsPath
+      }
       if let moviesPath = value.moviesPath {
         self.moviesPath = moviesPath
       }
       if let tvShowsPath = value.tvShowsPath {
         self.tvShowsPath = tvShowsPath
+      }
+      if let searchPath = value.searchPath {
+        self.searchPath = searchPath
       }
       if let selectedTab = value.selectedTab {
         self.selectedTab = selectedTab
@@ -78,8 +85,11 @@ private let logger = Logger(
   }
 
   private struct RestorationData: Codable {
+    var homePath: [Destination]?
+    var listsPath: [Destination]?
     var moviesPath: [Destination]?
     var tvShowsPath: [Destination]?
+    var searchPath: [Destination]?
     var selectedTab: Tab?
   }
 }
