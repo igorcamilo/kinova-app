@@ -27,6 +27,8 @@ jobs:
       env:
         TMDB_ACCESS_TOKEN: ${{ secrets.TMDB_ACCESS_TOKEN }}
       run: ./ci_scripts/ci_post_clone.sh
+    - name: Xcode 26.0 beta icon bug workaround
+      run : rm -rf ./Kinova/AppIcon.icon
     - name: Install xcresultparser
       run: brew install xcresultparser
     - name: Select Xcode version
