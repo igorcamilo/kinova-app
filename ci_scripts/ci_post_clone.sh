@@ -10,17 +10,17 @@ fi
 
 # Define the output file path
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-OUTPUT_FILE="$SCRIPT_DIR/../Kinova/KinovaSecrets.swift"
+OUTPUT_FILE="$SCRIPT_DIR/../Kinova/Secrets.swift"
 
 # Write the Swift file
 cat > "$OUTPUT_FILE" <<EOL
 // This file is auto-generated. Do not edit.
 
-enum KinovaSecrets {
+enum Secrets {
   static let tmdbAccessToken = #"""
     $TMDB_ACCESS_TOKEN
     """#
 }
 EOL
 
-echo "KinovaSecrets.swift generated at $OUTPUT_FILE"
+echo "Secrets.swift generated at $OUTPUT_FILE"
