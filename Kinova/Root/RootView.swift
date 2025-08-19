@@ -12,36 +12,7 @@ struct RootView: View {
   @SceneStorage("state") private var state: Data?
   @State private var viewModel = RootViewModel()
 
-  #if os(iOS)
-    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
-    var hasSearchTab: Bool { horizontalSizeClass == .compact }
-  #elseif os(tvOS)
-    var hasSearchTab: Bool { true }
-  #else
-    var hasSearchTab: Bool { false }
-  #endif
-
   var body: some View {
-    searchableTabView
-      .onAppear {
-        viewModel.restoreData(from: state)
-      }
-      .onChange(of: scenePhase) {
-        if scenePhase == .inactive {
-          state = viewModel.restorationData()
-        }
-      }
-  }
-
-  @ViewBuilder private var searchableTabView: some View {
-    if hasSearchTab {
-      tabView
-    } else {
-      tabView.searchable(text: $viewModel.searchText)
-    }
-  }
-
-  private var tabView: some View {
     TabView(selection: $viewModel.selectedTab) {
       Tab("Home", systemImage: "play.house", value: .home) {
         homeView
@@ -55,13 +26,19 @@ struct RootView: View {
       Tab("TV Shows", systemImage: "tv", value: .tvShows) {
         tvShowsView
       }
-      if hasSearchTab {
-        Tab(value: .search, role: .search) {
-          searchView.searchable(text: $viewModel.searchText)
-        }
+      Tab(value: .search, role: .search) {
+        searchView.searchable(text: $viewModel.searchText)
       }
     }
     .tabViewStyle(.sidebarAdaptable)
+    .onAppear {
+      viewModel.restoreData(from: state)
+    }
+    .onChange(of: scenePhase) {
+      if scenePhase == .inactive {
+        state = viewModel.restorationData()
+      }
+    }
   }
 
   private var homeView: some View {
