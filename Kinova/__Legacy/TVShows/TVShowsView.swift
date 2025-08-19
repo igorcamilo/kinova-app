@@ -24,7 +24,9 @@ struct TVShowsView: View {
     }
     .containerGeometry()
     .navigationTitle("TV Shows")
-    .toolbarTitleDisplayMode(.inlineLarge)
+    #if !os(tvOS)
+      .toolbarTitleDisplayMode(.inlineLarge)
+    #endif
     .refreshable { await viewModel.load() }
     .onAppear {
       Task {

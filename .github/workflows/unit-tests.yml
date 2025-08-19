@@ -16,16 +16,16 @@ jobs:
         include:
         - name: iOS
           destination: platform=iOS Simulator,arch=arm64,OS=26.0,name=iPhone 16 Pro Max
-          command: test
+          command: test -enableCodeCoverage YES
         - name: macOS
           destination: platform=macOS,arch=arm64
           command: build # Will test again when there's a macOS 26 runner
         - name: tvOS
           destination: platform=tvOS Simulator,arch=arm64,OS=26.0,name=Apple TV 4K (3rd generation)
-          command: test
+          command: test -enableCodeCoverage YES
         - name: visionOS
-          destination: platform=visionOS Simulator,arch=arm64,OS=26.0,name=Apple Vision Pro 4K
-          command: test
+          destination: platform=visionOS Simulator,arch=arm64,OS=26.0,name=Apple Vision Pro
+          command: test -enableCodeCoverage YES
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
@@ -46,7 +46,6 @@ jobs:
           -scheme Kinova \
           -destination "${{ matrix.destination }}" \
           -resultBundlePath "Artifacts/Kinova.xcresult" \
-          -enableCodeCoverage YES \
           CODE_SIGNING_ALLOWED=NO
     - name: Convert xcresult to JUnit
       run: xcresultparser -o junit Artifacts/Kinova.xcresult > Artifacts/Kinova.xml

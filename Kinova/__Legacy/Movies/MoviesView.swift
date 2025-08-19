@@ -24,7 +24,9 @@ struct MoviesView: View {
     }
     .containerGeometry()
     .navigationTitle("Movies")
-    .toolbarTitleDisplayMode(.inlineLarge)
+    #if !os(tvOS)
+      .toolbarTitleDisplayMode(.inlineLarge)
+    #endif
     .refreshable { await viewModel.load() }
     .onAppear {
       Task {

@@ -44,40 +44,50 @@ struct RootView: View {
   private var homeView: some View {
     NavigationStack(path: $viewModel.homePath) {
       Button("Home View") {}
-        .navigationTitle("Home")
-        .toolbarTitleDisplayMode(.inlineLarge)
+        #if !os(tvOS)
+          .navigationTitle("Home")
+          .toolbarTitleDisplayMode(.inlineLarge)
+        #endif
     }
   }
 
   private var listsView: some View {
     NavigationStack(path: $viewModel.listsPath) {
       Button("Lists View") {}
-        .navigationTitle("Lists")
-        .toolbarTitleDisplayMode(.inlineLarge)
+        #if !os(tvOS)
+          .navigationTitle("Lists")
+          .toolbarTitleDisplayMode(.inlineLarge)
+        #endif
     }
   }
 
   private var moviesView: some View {
     NavigationStack(path: $viewModel.moviesPath) {
       Button("Movies View") {}
-        .navigationTitle("Movies")
-        .toolbarTitleDisplayMode(.inlineLarge)
+        #if !os(tvOS)
+          .navigationTitle("Movies")
+          .toolbarTitleDisplayMode(.inlineLarge)
+        #endif
     }
   }
 
   private var tvShowsView: some View {
     NavigationStack(path: $viewModel.tvShowsPath) {
       Button("TV Shows View") {}
-        .navigationTitle("TV Shows")
-        .toolbarTitleDisplayMode(.inlineLarge)
+        #if !os(tvOS)
+          .navigationTitle("TV Shows")
+          .toolbarTitleDisplayMode(.inlineLarge)
+        #endif
     }
   }
 
   private var searchView: some View {
     NavigationStack(path: $viewModel.searchPath) {
-      Button("Search View") {}
-        .navigationTitle("Search")
-        .toolbarTitleDisplayMode(.inlineLarge)
+      Text("Search View")
+        #if !os(tvOS)
+          .navigationTitle("Search")
+          .toolbarTitleDisplayMode(.inlineLarge)
+        #endif
     }
   }
 }
