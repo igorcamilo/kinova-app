@@ -6,9 +6,10 @@
 //  Copyright © 2025 Igor Camilo. All rights reserved.
 //
 
-@testable import Kinova
-import Testing
 import TMDB
+import Testing
+
+@testable import Kinova
 
 struct RootViewModelTests {
   @Test func `Test generation of simplest restoration data`() throws {
