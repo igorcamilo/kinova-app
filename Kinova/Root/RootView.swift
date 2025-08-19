@@ -27,7 +27,7 @@ struct RootView: View {
         tvShowsView
       }
       Tab(value: .search, role: .search) {
-        searchView.searchable(text: $viewModel.searchText)
+        searchView
       }
     }
     .tabViewStyle(.sidebarAdaptable)
@@ -43,7 +43,7 @@ struct RootView: View {
 
   private var homeView: some View {
     NavigationStack(path: $viewModel.homePath) {
-      Button("Home View") {}
+      Text("Home View")
         #if !os(tvOS)
           .navigationTitle("Home")
           .toolbarTitleDisplayMode(.inlineLarge)
@@ -53,7 +53,7 @@ struct RootView: View {
 
   private var listsView: some View {
     NavigationStack(path: $viewModel.listsPath) {
-      Button("Lists View") {}
+      Text("Lists View")
         #if !os(tvOS)
           .navigationTitle("Lists")
           .toolbarTitleDisplayMode(.inlineLarge)
@@ -63,7 +63,7 @@ struct RootView: View {
 
   private var moviesView: some View {
     NavigationStack(path: $viewModel.moviesPath) {
-      Button("Movies View") {}
+      Text("Movies View")
         #if !os(tvOS)
           .navigationTitle("Movies")
           .toolbarTitleDisplayMode(.inlineLarge)
@@ -73,7 +73,7 @@ struct RootView: View {
 
   private var tvShowsView: some View {
     NavigationStack(path: $viewModel.tvShowsPath) {
-      Button("TV Shows View") {}
+      Text("TV Shows View")
         #if !os(tvOS)
           .navigationTitle("TV Shows")
           .toolbarTitleDisplayMode(.inlineLarge)

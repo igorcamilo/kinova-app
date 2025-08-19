@@ -25,7 +25,6 @@ private let logger = Logger(
   var tvShowsPath: [Destination] = []
   var searchPath: [Destination] = []
   var selectedTab = Tab.home
-  var searchText = ""
 
   enum Tab: String, Codable, Hashable, Sendable {
     case home
