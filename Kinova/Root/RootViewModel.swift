@@ -20,30 +20,21 @@ private let logger = Logger(
 
 @Observable final class RootViewModel {
   var homePath: [Destination] = []
-  var listsPath: [Destination] = []
-  var moviesPath: [Destination] = []
-  var tvShowsPath: [Destination] = []
   var searchPath: [Destination] = []
   var selectedTab = Tab.home
 
   enum Tab: String, Codable, Hashable, Sendable {
     case home
-    case lists
-    case movies
-    case tvShows
     case search
   }
 
   func restorationData() -> Data? {
     let value = RestorationData(
       homePath: homePath,
-      listsPath: listsPath,
-      moviesPath: moviesPath,
-      tvShowsPath: tvShowsPath,
       searchPath: searchPath,
       selectedTab: selectedTab
     )
-    logger.info("\(#function) creating restoration data: \(String(describing: value))")
+    logger.info("\(#function) creating restoration data")
     do {
       return try encoder.encode(value)
     } catch {
@@ -59,18 +50,9 @@ private let logger = Logger(
     }
     do {
       let value = try decoder.decode(RestorationData.self, from: data)
-      logger.info("\(#function) restoring from data: \(String(describing: value))")
+      logger.info("\(#function) restoring from data")
       if let homePath = value.homePath {
         self.homePath = homePath
-      }
-      if let listsPath = value.listsPath {
-        self.listsPath = listsPath
-      }
-      if let moviesPath = value.moviesPath {
-        self.moviesPath = moviesPath
-      }
-      if let tvShowsPath = value.tvShowsPath {
-        self.tvShowsPath = tvShowsPath
       }
       if let searchPath = value.searchPath {
         self.searchPath = searchPath
@@ -85,9 +67,6 @@ private let logger = Logger(
 
   private struct RestorationData: Codable {
     var homePath: [Destination]?
-    var listsPath: [Destination]?
-    var moviesPath: [Destination]?
-    var tvShowsPath: [Destination]?
     var searchPath: [Destination]?
     var selectedTab: Tab?
   }
