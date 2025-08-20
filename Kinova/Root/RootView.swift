@@ -17,15 +17,6 @@ struct RootView: View {
       Tab("Home", systemImage: "play.house", value: .home) {
         homeView
       }
-      Tab("Lists", systemImage: "list.bullet.rectangle", value: .lists) {
-        listsView
-      }
-      Tab("Movies", systemImage: "film", value: .movies) {
-        moviesView
-      }
-      Tab("TV Shows", systemImage: "tv", value: .tvShows) {
-        tvShowsView
-      }
       Tab(value: .search, role: .search) {
         searchView
       }
@@ -46,36 +37,6 @@ struct RootView: View {
       Text("Home View")
         #if !os(tvOS)
           .navigationTitle("Home")
-          .toolbarTitleDisplayMode(.inlineLarge)
-        #endif
-    }
-  }
-
-  private var listsView: some View {
-    NavigationStack(path: $viewModel.listsPath) {
-      Text("Lists View")
-        #if !os(tvOS)
-          .navigationTitle("Lists")
-          .toolbarTitleDisplayMode(.inlineLarge)
-        #endif
-    }
-  }
-
-  private var moviesView: some View {
-    NavigationStack(path: $viewModel.moviesPath) {
-      Text("Movies View")
-        #if !os(tvOS)
-          .navigationTitle("Movies")
-          .toolbarTitleDisplayMode(.inlineLarge)
-        #endif
-    }
-  }
-
-  private var tvShowsView: some View {
-    NavigationStack(path: $viewModel.tvShowsPath) {
-      Text("TV Shows View")
-        #if !os(tvOS)
-          .navigationTitle("TV Shows")
           .toolbarTitleDisplayMode(.inlineLarge)
         #endif
     }
